@@ -1,0 +1,9 @@
+export enum Materia {
+  STORIA = 'STORIA',
+
+  ITALIANO = 'ITALIANO',
+
+  INGLESE = 'INGLESE',
+
+  MATEMATICA = 'MATEMATICA',
+}

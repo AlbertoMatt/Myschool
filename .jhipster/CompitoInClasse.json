@@ -1,0 +1,40 @@
+{
+  "applications": "*",
+  "changelogDate": "20231113104013",
+  "dto": "mapstruct",
+  "entityTableName": "compito_in_classe",
+  "fields": [
+    {
+      "fieldName": "data",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "materia",
+      "fieldType": "Materia",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "STORIA,ITALIANO,INGLESE,MATEMATICA"
+    },
+    {
+      "fieldName": "risultatoNumerico",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "10",
+      "fieldValidateRulesMin": "0"
+    }
+  ],
+  "name": "CompitoInClasse",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "alunno",
+      "otherEntityRelationshipName": "compitiEseguiti",
+      "relationshipName": "alunnoDiRiferimento",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

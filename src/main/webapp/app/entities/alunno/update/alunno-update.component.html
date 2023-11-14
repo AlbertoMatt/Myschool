@@ -1,0 +1,101 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-alunno-heading" data-cy="AlunnoCreateUpdateHeading">Genera o modifica un Alunno</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_nome">Nome</label>
+          <input type="text" class="form-control" name="nome" id="field_nome" data-cy="nome" formControlName="nome" />
+          <div *ngIf="editForm.get('nome')!.invalid && (editForm.get('nome')!.dirty || editForm.get('nome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('nome')?.errors?.required"
+              >Translation missing for entity.validation.required</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_cognome">Cognome</label>
+          <input type="text" class="form-control" name="cognome" id="field_cognome" data-cy="cognome" formControlName="cognome" />
+          <div *ngIf="editForm.get('cognome')!.invalid && (editForm.get('cognome')!.dirty || editForm.get('cognome')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('cognome')?.errors?.required"
+              >Translation missing for entity.validation.required</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_dataNascita">Data Nascita</label>
+          <div class="input-group">
+            <input
+              id="field_dataNascita"
+              data-cy="dataNascita"
+              type="text"
+              class="form-control"
+              name="dataNascita"
+              ngbDatepicker
+              #dataNascitaDp="ngbDatepicker"
+              formControlName="dataNascita"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dataNascitaDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div *ngIf="editForm.get('dataNascita')!.invalid && (editForm.get('dataNascita')!.dirty || editForm.get('dataNascita')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('dataNascita')?.errors?.required"
+              >Translation missing for entity.validation.required</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_classeDiAppartenenza">Classe Di Appartenenza</label>
+          <select
+            class="form-control"
+            id="field_classeDiAppartenenza"
+            data-cy="classeDiAppartenenza"
+            name="classeDiAppartenenza"
+            formControlName="classeDiAppartenenza"
+            [compareWith]="compareClasse"
+          >
+            <option *ngIf="editForm.get(['classeDiAppartenenza'])!.value == null" [ngValue]="null" selected></option>
+            <option [ngValue]="classeOption" *ngFor="let classeOption of classesSharedCollection">{{ classeOption.id }}</option>
+          </select>
+        </div>
+        <div
+          *ngIf="
+            editForm.get(['classeDiAppartenenza'])!.invalid &&
+            (editForm.get(['classeDiAppartenenza'])!.dirty || editForm.get(['classeDiAppartenenza'])!.touched)
+          "
+        >
+          <small class="form-text text-danger" *ngIf="editForm.get(['classeDiAppartenenza'])?.errors?.required"
+            >Translation missing for entity.validation.required</small
+          >
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Translation missing for entity.action.cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Translation missing for entity.action.save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

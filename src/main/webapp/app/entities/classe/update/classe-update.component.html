@@ -1,0 +1,84 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-classe-heading" data-cy="ClasseCreateUpdateHeading">Genera o modifica un Classe</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_indicazioneNumerica">Indicazione Numerica</label>
+          <input
+            type="number"
+            class="form-control"
+            name="indicazioneNumerica"
+            id="field_indicazioneNumerica"
+            data-cy="indicazioneNumerica"
+            formControlName="indicazioneNumerica"
+          />
+          <div
+            *ngIf="
+              editForm.get('indicazioneNumerica')!.invalid &&
+              (editForm.get('indicazioneNumerica')!.dirty || editForm.get('indicazioneNumerica')!.touched)
+            "
+          >
+            <small class="form-text text-danger" *ngIf="editForm.get('indicazioneNumerica')?.errors?.required"
+              >Translation missing for entity.validation.required</small
+            >
+            <small class="form-text text-danger" *ngIf="editForm.get('indicazioneNumerica')?.errors?.min"
+              >Translation missing for entity.validation.min</small
+            >
+            <small class="form-text text-danger" *ngIf="editForm.get('indicazioneNumerica')?.errors?.max"
+              >Translation missing for entity.validation.max</small
+            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('indicazioneNumerica')?.errors?.number"
+              >Translation missing for entity.validation.number</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_sezione">Sezione</label>
+          <input type="text" class="form-control" name="sezione" id="field_sezione" data-cy="sezione" formControlName="sezione" />
+          <div *ngIf="editForm.get('sezione')!.invalid && (editForm.get('sezione')!.dirty || editForm.get('sezione')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('sezione')?.errors?.required"
+              >Translation missing for entity.validation.required</small
+            >
+            <small class="form-text text-danger" *ngIf="editForm.get('sezione')?.errors?.maxlength"
+              >Translation missing for entity.validation.maxlength</small
+            >
+            <small class="form-text text-danger" *ngIf="editForm.get('sezione')?.errors?.pattern"
+              >Translation missing for entity.validation.pattern</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_note">Note</label>
+          <input type="text" class="form-control" name="note" id="field_note" data-cy="note" formControlName="note" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Translation missing for entity.action.cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Translation missing for entity.action.save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+{
+  "applications": "*",
+  "changelogDate": "20231113103813",
+  "dto": "mapstruct",
+  "entityTableName": "classe",
+  "fields": [
+    {
+      "fieldName": "indicazioneNumerica",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required", "min", "max"],
+      "fieldValidateRulesMax": "5",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "sezione",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "maxlength", "pattern"],
+      "fieldValidateRulesMaxlength": "1",
+      "fieldValidateRulesPattern": "^[A-E]"
+    },
+    {
+      "fieldName": "note",
+      "fieldType": "String"
+    }
+  ],
+  "name": "Classe",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "alunno",
+      "otherEntityRelationshipName": "classeDiAppartenenza",
+      "relationshipName": "alunni",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

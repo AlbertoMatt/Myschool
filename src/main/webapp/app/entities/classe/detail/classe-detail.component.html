@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="classe">
+      <h2 data-cy="classeDetailsHeading"><span>Classe</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Translation missing for global.field.id</span></dt>
+        <dd>
+          <span>{{ classe.id }}</span>
+        </dd>
+        <dt><span>Indicazione Numerica</span></dt>
+        <dd>
+          <span>{{ classe.indicazioneNumerica }}</span>
+        </dd>
+        <dt><span>Sezione</span></dt>
+        <dd>
+          <span>{{ classe.sezione }}</span>
+        </dd>
+        <dt><span>Note</span></dt>
+        <dd>
+          <span>{{ classe.note }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Translation missing for entity.action.back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/classe', classe.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Translation missing for entity.action.edit</span>
+      </button>
+    </div>
+  </div>
+</div>

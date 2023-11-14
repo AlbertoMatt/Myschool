@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-3">
+    <span class="hipster img-fluid rounded"></span>
+  </div>
+
+  <div class="col-md-9">
+    <h1 class="display-4"><span>Benvenuto, Java Hipster!</span> (Myschool)</h1>
+
+    <p class="lead">Questa è la tua home page</p>
+
+    <div [ngSwitch]="account !== null">
+      <div class="alert alert-success" *ngSwitchCase="true">
+        <span id="home-logged-message" *ngIf="account">Autenticato come "{{ account.login }}".</span>
+      </div>
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        <span>Se vuoi </span>
+        <a class="alert-link" (click)="login()">accedere</a
+        ><span
+          >, puoi provare gli account di default: <br />
+          - Amministratore (user = "admin" e la password = "admin") <br />
+          - utente (user = "user" e la password = "user")</span
+        >
+      </div>
+
+      <div class="alert alert-warning" *ngSwitchCase="false">
+        <span>Non hai ancora un account?</span>&nbsp;
+        <a class="alert-link" routerLink="/account/register">Crea un account</a>
+      </div>
+    </div>
+
+    <p>In caso di domande su JHipster:</p>
+
+    <ul>
+      <li><a href="https://www.jhipster.tech/" target="_blank" rel="noopener noreferrer">Homepage JHipster</a></li>
+      <li>
+        <a href="https://stackoverflow.com/tags/jhipster/info" target="_blank" rel="noopener noreferrer">JHipster su Stack Overflow</a>
+      </li>
+      <li>
+        <a href="https://github.com/jhipster/generator-jhipster/issues?state=open" target="_blank" rel="noopener noreferrer"
+          >JHipster tracciamento errori</a
+        >
+      </li>
+      <li>
+        <a href="https://gitter.im/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">Chat room pubblica di JHipster</a>
+      </li>
+      <li><a href="https://twitter.com/jhipster" target="_blank" rel="noopener noreferrer">segui @jhipster su Twitter</a></li>
+    </ul>
+
+    <p>
+      <span>Se ti piace JHipster, non dimenticarti di darci una stella su</span>
+      <a href="https://github.com/jhipster/generator-jhipster" target="_blank" rel="noopener noreferrer">GitHub</a>!
+    </p>
+  </div>
+</div>

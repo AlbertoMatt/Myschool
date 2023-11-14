@@ -1,0 +1,129 @@
+<div>
+  <h2 id="page-heading" data-cy="CompitoInClasseHeading">
+    <span>CompitoInClasses</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-compito-in-classe"
+        [routerLink]="['/compito-in-classe/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span>Genera un nuovo Compito In Classe</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="compitoInClasses?.length === 0">
+    <span>No Compito In Classes found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="compitoInClasses && compitoInClasses.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span>Translation missing for global.field.id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="data">
+            <div class="d-flex">
+              <span>Data</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="materia">
+            <div class="d-flex">
+              <span>Materia</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="risultatoNumerico">
+            <div class="d-flex">
+              <span>Risultato Numerico</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="alunnoDiRiferimento.id">
+            <div class="d-flex">
+              <span>Alunno Di Riferimento</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let compitoInClasse of compitoInClasses; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/compito-in-classe', compitoInClasse.id, 'view']">{{ compitoInClasse.id }}</a>
+          </td>
+          <td>{{ compitoInClasse.data | formatMediumDate }}</td>
+          <td>{{ compitoInClasse.materia }}</td>
+          <td>{{ compitoInClasse.risultatoNumerico }}</td>
+          <td>
+            <div *ngIf="compitoInClasse.alunnoDiRiferimento">
+              <a [routerLink]="['/alunno', compitoInClasse.alunnoDiRiferimento.id, 'view']">{{ compitoInClasse.alunnoDiRiferimento.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a
+                [routerLink]="['/compito-in-classe', compitoInClasse.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">Translation missing for entity.action.view</span>
+              </a>
+
+              <a
+                [routerLink]="['/compito-in-classe', compitoInClasse.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Translation missing for entity.action.edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(compitoInClasse)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Translation missing for entity.action.delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="compitoInClasses && compitoInClasses.length > 0">
+    <div class="d-flex justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [page]="page"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="navigateToPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

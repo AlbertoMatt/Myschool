@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20231113103913",
+  "dto": "mapstruct",
+  "entityTableName": "alunno",
+  "fields": [
+    {
+      "fieldName": "nome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "cognome",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "dataNascita",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Alunno",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "compitoInClasse",
+      "otherEntityRelationshipName": "alunnoDiRiferimento",
+      "relationshipName": "compitiEseguiti",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "classe",
+      "otherEntityRelationshipName": "alunni",
+      "relationshipName": "classeDiAppartenenza",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

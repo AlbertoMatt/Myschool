@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="alunno">
+      <h2 data-cy="alunnoDetailsHeading"><span>Alunno</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Translation missing for global.field.id</span></dt>
+        <dd>
+          <span>{{ alunno.id }}</span>
+        </dd>
+        <dt><span>Nome</span></dt>
+        <dd>
+          <span>{{ alunno.nome }}</span>
+        </dd>
+        <dt><span>Cognome</span></dt>
+        <dd>
+          <span>{{ alunno.cognome }}</span>
+        </dd>
+        <dt><span>Data Nascita</span></dt>
+        <dd>
+          <span>{{ alunno.dataNascita | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Classe Di Appartenenza</span></dt>
+        <dd>
+          <div *ngIf="alunno.classeDiAppartenenza">
+            <a [routerLink]="['/classe', alunno.classeDiAppartenenza.id, 'view']">{{ alunno.classeDiAppartenenza.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Translation missing for entity.action.back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/alunno', alunno.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Translation missing for entity.action.edit</span>
+      </button>
+    </div>
+  </div>
+</div>

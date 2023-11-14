@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="compitoInClasse">
+      <h2 data-cy="compitoInClasseDetailsHeading"><span>Compito In Classe</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Translation missing for global.field.id</span></dt>
+        <dd>
+          <span>{{ compitoInClasse.id }}</span>
+        </dd>
+        <dt><span>Data</span></dt>
+        <dd>
+          <span>{{ compitoInClasse.data | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Materia</span></dt>
+        <dd>
+          <span>{{ compitoInClasse.materia }}</span>
+        </dd>
+        <dt><span>Risultato Numerico</span></dt>
+        <dd>
+          <span>{{ compitoInClasse.risultatoNumerico }}</span>
+        </dd>
+        <dt><span>Alunno Di Riferimento</span></dt>
+        <dd>
+          <div *ngIf="compitoInClasse.alunnoDiRiferimento">
+            <a [routerLink]="['/alunno', compitoInClasse.alunnoDiRiferimento.id, 'view']">{{ compitoInClasse.alunnoDiRiferimento.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Translation missing for entity.action.back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/compito-in-classe', compitoInClasse.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Translation missing for entity.action.edit</span>
+      </button>
+    </div>
+  </div>
+</div>
