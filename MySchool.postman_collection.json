@@ -1,0 +1,614 @@
+{
+  "info": {
+    "_postman_id": "6b7708ae-c794-498c-a25c-88b15b07a056",
+    "name": "MySchool",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Classe",
+      "item": [
+        {
+          "name": "all classes NO AUTH",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/classes?page=0&size=25",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "classes"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "25"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "classe per id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/classes/1502",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "classes", "1502"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "put classe",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"indicazioneNumerica\": 1,\n  \"sezione\": \"A\",\n  \"note\": \"noticina\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/classes/1",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "classes", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete classe",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/classes/1501",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "classes", "1501"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "patch classe",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 2,\n  \"indicazioneNumerica\": 1,\n  \"sezione\": \"B\",\n  \"note\": \"noticina\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/classes/2",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "classes", "2"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post classe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"indicazioneNumerica\": 5,\n  \"sezione\": \"E\",\n  \"note\": \"nessuna\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/classes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "classes"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Alunni",
+      "item": [
+        {
+          "name": "all students",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/alunnos?page=0&size=20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "alunnos"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "alunno per id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/alunnos/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "alunnos", "7"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "put alunno",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 10,\n  \"nome\": \"antonio\",\n  \"cognome\": \"scarpa\",\n  \"dataNascita\": \"1999-11-13\",\n  \"classeDiAppartenenza\": {\n    \"id\": 10,\n    \"indicazioneNumerica\": 2,\n    \"sezione\": \"E\",\n    \"note\": \"nessuna\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/alunnos/10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "alunnos", "10"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete alunno",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/alunnos/10",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "alunnos", "10"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "patch alunno",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 9,\n  \"nome\": \"nicola\",\n  \"cognome\": \"andolfi\",\n  \"dataNascita\": \"1997-06-14\",\n  \"classeDiAppartenenza\": {\n    \"id\": 9,\n    \"indicazioneNumerica\": 2,\n    \"sezione\": \"D\",\n    \"note\": \"nessuna\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/alunnos/9",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "alunnos", "9"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post alunno",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"alina\",\n  \"cognome\": \"tamberi\",\n  \"dataNascita\": \"1997-10-07\",\n  \"classeDiAppartenenza\": {\n    \"id\": 4,\n    \"indicazioneNumerica\": 1,\n    \"sezione\": \"D\",\n    \"note\": \"nessuna\"\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/alunnos",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "alunnos"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Compito In Classe",
+      "item": [
+        {
+          "name": "all test",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/compito-in-classes?page=0&size=20",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "compito-in-classes"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "0"
+                },
+                {
+                  "key": "size",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "compito per id",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/compito-in-classes/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "compito-in-classes", "7"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "put compito",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 7,\n  \"data\": \"2023-11-14\",\n  \"materia\": \"INGLESE\",\n  \"risultatoNumerico\": 10,\n  \"alunnoDiRiferimento\": {\n    \"id\": 5,\n    \"nome\": \"incidentally\",\n    \"cognome\": \"matterazzo\",\n    \"dataNascita\": \"2000-11-13\",\n    \"classeDiAppartenenza\": {\n      \"id\": 5,\n      \"indicazioneNumerica\": 1,\n      \"sezione\": \"E\",\n      \"note\": \"nessuna\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/compito-in-classes/9",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "compito-in-classes", "9"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete compito",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/api/compito-in-classes/1501",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "compito-in-classes", "1501"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "patch compito",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 7,\n  \"data\": \"2023-11-14\",\n  \"materia\": \"INGLESE\",\n  \"risultatoNumerico\": 10,\n  \"alunnoDiRiferimento\": {\n    \"id\": 7,\n    \"nome\": \"impur\",\n    \"cognome\": \"calculus\",\n    \"dataNascita\": \"2000-11-12\",\n    \"classeDiAppartenenza\": {\n      \"id\": 7,\n      \"indicazioneNumerica\": 2,\n      \"sezione\": \"B\",\n      \"note\": \"note\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/compito-in-classes/7",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "compito-in-classes", "7"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "post compito",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "accept",
+                "value": "*/*"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": \"2023-11-14\",\n  \"materia\": \"ITALIANO\",\n  \"risultatoNumerico\": 5.5,\n  \"alunnoDiRiferimento\": {\n    \"id\": 6,\n    \"nome\": \"through\",\n    \"cognome\": \"sharply\",\n    \"dataNascita\": \"2000-11-12\",\n    \"classeDiAppartenenza\": {\n      \"id\": 6,\n      \"indicazioneNumerica\": 2,\n      \"sezione\": \"A\",\n      \"note\": \"nessuna\"\n    }\n  }\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/compito-in-classes",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "8080",
+              "path": ["api", "compito-in-classes"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "get token",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "var res = pm.response.json();\r",
+              "pm.collectionVariables.set(\"token\", res.id_token);\r",
+              "console.log(\"token = \" + pm.collectionVariables.get(\"token\"))"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n  \"username\": \"admin\",\r\n  \"password\": \"admin\",\r\n  \"rememberMe\": true\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/authenticate",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8080",
+          "path": ["api", "authenticate"]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTcwMDA1MTgwNCwiYXV0aCI6IlJPTEVfQURNSU4gUk9MRV9VU0VSIiwiaWF0IjoxNjk5OTY1NDA0fQ.yhH0it7IB8ZIYFwRIxtVlx2ZOdEi8kq3J-wessHqyVl3ntilb9oubGQtUUCFMNt7xVM7OzXyHfcyAFqGg_caZQ"
+    }
+  ]
+}

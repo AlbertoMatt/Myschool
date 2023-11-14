@@ -1,18 +1,30 @@
-CREDENZIALI DI ACCESSO DI UN UTENTE DI DEFAULT GENERATO DA JHIPSTER
-Username: "admin"
-Password: "admin"
+## Credenziali di Accesso
 
-API
-Elenco delle Classi (API Pubblica)
-Endpoint: /api/classes
-Metodo: GET
-Descrizione: Restituisce l'elenco delle classi della scuola.
+- **Username:** admin
+- **Password:** admin
 
-Altre API (Richiedono Autenticazione)
-Le altre API, come quelle per gestire gli alunni e i compiti in classe, richiedono l'autenticazione tramite l'inserimento di un token di autenticazione.
+## API
 
-CONFIGURAZIONE DEL DATABASE
-Modifica al file src/main/resources/config/application-dev.yml per configurare l'accesso al database, inserendo nel datasource il nome del database e la password di connessione al database.
+L'insieme delle API è contenuto nel file `MySchool.postman_collection.json` da importare su Postman. Utilizzando la richiesta "get token" presente nella root della collection, è possibile ottenere un token di autenticazione, il quale viene salvato nella collectionVariable `token`.
 
-AVVIO DELL'APPLICAZIONE
-Digitando il comando ./mvnw da terminale nella cartella dove è presente il progetto.
+### Elenco delle Classi (API Pubblica)
+
+- **Endpoint:** `/api/classes`
+- **Metodo:** GET
+- **Descrizione:** Restituisce l'elenco delle classi della scuola.
+
+### Altre API (Richiedono Autenticazione)
+
+Le altre API, come quelle per gestire gli alunni e i compiti in classe, richiedono l'autenticazione tramite l'inserimento della variabile `token` nell'header della richiesta, che si può generare facendo la chiamata "get token".
+
+## Configurazione del Database
+
+Si deve modificare il file `src/main/resources/config/application-dev.yml` per configurare l'accesso al database. Si deve modificare nel datasource il nome del database, lo username e la password di connessione allo schema del database, attraverso i campi `spring.datasource.url`, `spring.datasource.username` e `spring.datasource.password`. Inoltre si deve modificare il file `pom.xml` nei campi `liquibase-plugin.url`, `liquibase-plugin.username` e `liquibase-plugin.password`.
+
+## Avvio dell'Applicazione
+
+Per avviare l'applicazione si deve eseguire il seguente comando da terminale nella root del progetto:
+
+```bash
+./mvnw
+```
