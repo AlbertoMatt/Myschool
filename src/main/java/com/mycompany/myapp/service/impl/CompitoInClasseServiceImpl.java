@@ -1,13 +1,19 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.domain.Alunno;
 import com.mycompany.myapp.domain.CompitoInClasse;
 import com.mycompany.myapp.repository.CompitoInClasseRepository;
 import com.mycompany.myapp.service.CompitoInClasseService;
+import com.mycompany.myapp.service.dto.AlunnoDTO;
 import com.mycompany.myapp.service.dto.CompitoInClasseDTO;
+import com.mycompany.myapp.service.mapper.AlunnoMapper;
 import com.mycompany.myapp.service.mapper.CompitoInClasseMapper;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +31,9 @@ public class CompitoInClasseServiceImpl implements CompitoInClasseService {
     private final CompitoInClasseRepository compitoInClasseRepository;
 
     private final CompitoInClasseMapper compitoInClasseMapper;
+
+    @Autowired
+    private AlunnoMapper alunnoMapper;
 
     public CompitoInClasseServiceImpl(CompitoInClasseRepository compitoInClasseRepository, CompitoInClasseMapper compitoInClasseMapper) {
         this.compitoInClasseRepository = compitoInClasseRepository;
@@ -80,5 +89,11 @@ public class CompitoInClasseServiceImpl implements CompitoInClasseService {
     public void delete(Long id) {
         log.debug("Request to delete CompitoInClasse : {}", id);
         compitoInClasseRepository.deleteById(id);
+    }
+
+    @Override
+    public List<AlunnoDTO> findAlunniByCompitoAndRisultatoSuperiore(Long compitoId, Double valoreMinimo) {
+        List<Alunno> alunni = compitoInClasseRepository.findAlunniByCompitoAndRisultatoSuperiore(compitoId, valoreMinimo);
+        return alunni.stream().map(alunnoMapper::toDto).collect(Collectors.toList());
     }
 }

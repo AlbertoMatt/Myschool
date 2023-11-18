@@ -2,6 +2,7 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.repository.CompitoInClasseRepository;
 import com.mycompany.myapp.service.CompitoInClasseService;
+import com.mycompany.myapp.service.dto.AlunnoDTO;
 import com.mycompany.myapp.service.dto.CompitoInClasseDTO;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -202,5 +203,11 @@ public class CompitoInClasseResource {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/{id}/alunni-risultato-superiore")
+    public ResponseEntity<List<AlunnoDTO>> getAlunniRisultatoSuperiore(@PathVariable Long id, @RequestParam Double valoreMinimo) {
+        List<AlunnoDTO> alunni = compitoInClasseService.findAlunniByCompitoAndRisultatoSuperiore(id, valoreMinimo);
+        return ResponseEntity.ok().body(alunni);
     }
 }

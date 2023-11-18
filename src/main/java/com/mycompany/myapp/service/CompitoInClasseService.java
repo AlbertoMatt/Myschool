@@ -1,6 +1,8 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.service.dto.AlunnoDTO;
 import com.mycompany.myapp.service.dto.CompitoInClasseDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -55,4 +57,6 @@ public interface CompitoInClasseService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<AlunnoDTO> findAlunniByCompitoAndRisultatoSuperiore(Long compitoId, Double valoreMinimo);
 }
