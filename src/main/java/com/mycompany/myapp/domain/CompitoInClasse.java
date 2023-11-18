@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -26,24 +28,18 @@ public class CompitoInClasse implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "data", nullable = false)
-    private LocalDate data;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "materia", nullable = false)
     private Materia materia;
 
     @NotNull
-    @DecimalMin(value = "0")
-    @DecimalMax(value = "10")
-    @Column(name = "risultato_numerico", nullable = false)
-    private Double risultatoNumerico;
+    @Column(name = "data", nullable = false)
+    private LocalDate data;
 
-    @ManyToOne(optional = false)
-    @NotNull
-    @JsonIgnoreProperties(value = { "compitiEseguitis", "classeDiAppartenenza" }, allowSetters = true)
-    private Alunno alunnoDiRiferimento;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "compito")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "alunno", "compito" }, allowSetters = true)
+    private Set<AlunnoCompito> alunnis = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -60,19 +56,6 @@ public class CompitoInClasse implements Serializable {
         this.id = id;
     }
 
-    public LocalDate getData() {
-        return this.data;
-    }
-
-    public CompitoInClasse data(LocalDate data) {
-        this.setData(data);
-        return this;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
-    }
-
     public Materia getMateria() {
         return this.materia;
     }
@@ -86,29 +69,47 @@ public class CompitoInClasse implements Serializable {
         this.materia = materia;
     }
 
-    public Double getRisultatoNumerico() {
-        return this.risultatoNumerico;
+    public LocalDate getData() {
+        return this.data;
     }
 
-    public CompitoInClasse risultatoNumerico(Double risultatoNumerico) {
-        this.setRisultatoNumerico(risultatoNumerico);
+    public CompitoInClasse data(LocalDate data) {
+        this.setData(data);
         return this;
     }
 
-    public void setRisultatoNumerico(Double risultatoNumerico) {
-        this.risultatoNumerico = risultatoNumerico;
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
-    public Alunno getAlunnoDiRiferimento() {
-        return this.alunnoDiRiferimento;
+    public Set<AlunnoCompito> getAlunnis() {
+        return this.alunnis;
     }
 
-    public void setAlunnoDiRiferimento(Alunno alunno) {
-        this.alunnoDiRiferimento = alunno;
+    public void setAlunnis(Set<AlunnoCompito> alunnoCompitos) {
+        if (this.alunnis != null) {
+            this.alunnis.forEach(i -> i.setCompito(null));
+        }
+        if (alunnoCompitos != null) {
+            alunnoCompitos.forEach(i -> i.setCompito(this));
+        }
+        this.alunnis = alunnoCompitos;
     }
 
-    public CompitoInClasse alunnoDiRiferimento(Alunno alunno) {
-        this.setAlunnoDiRiferimento(alunno);
+    public CompitoInClasse alunnis(Set<AlunnoCompito> alunnoCompitos) {
+        this.setAlunnis(alunnoCompitos);
+        return this;
+    }
+
+    public CompitoInClasse addAlunni(AlunnoCompito alunnoCompito) {
+        this.alunnis.add(alunnoCompito);
+        alunnoCompito.setCompito(this);
+        return this;
+    }
+
+    public CompitoInClasse removeAlunni(AlunnoCompito alunnoCompito) {
+        this.alunnis.remove(alunnoCompito);
+        alunnoCompito.setCompito(null);
         return this;
     }
 
@@ -136,9 +137,8 @@ public class CompitoInClasse implements Serializable {
     public String toString() {
         return "CompitoInClasse{" +
             "id=" + getId() +
-            ", data='" + getData() + "'" +
             ", materia='" + getMateria() + "'" +
-            ", risultatoNumerico=" + getRisultatoNumerico() +
+            ", data='" + getData() + "'" +
             "}";
     }
 }

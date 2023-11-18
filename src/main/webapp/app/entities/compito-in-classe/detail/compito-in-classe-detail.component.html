@@ -14,23 +14,13 @@
         <dd>
           <span>{{ compitoInClasse.id }}</span>
         </dd>
-        <dt><span>Data</span></dt>
-        <dd>
-          <span>{{ compitoInClasse.data | formatMediumDate }}</span>
-        </dd>
         <dt><span>Materia</span></dt>
         <dd>
           <span>{{ compitoInClasse.materia }}</span>
         </dd>
-        <dt><span>Risultato Numerico</span></dt>
+        <dt><span>Data</span></dt>
         <dd>
-          <span>{{ compitoInClasse.risultatoNumerico }}</span>
-        </dd>
-        <dt><span>Alunno Di Riferimento</span></dt>
-        <dd>
-          <div *ngIf="compitoInClasse.alunnoDiRiferimento">
-            <a [routerLink]="['/alunno', compitoInClasse.alunnoDiRiferimento.id, 'view']">{{ compitoInClasse.alunnoDiRiferimento.id }}</a>
-          </div>
+          <span>{{ compitoInClasse.data | formatMediumDate }}</span>
         </dd>
       </dl>
 

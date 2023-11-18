@@ -15,17 +15,10 @@ public class CompitoInClasseDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private LocalDate data;
-
-    @NotNull
     private Materia materia;
 
     @NotNull
-    @DecimalMin(value = "0")
-    @DecimalMax(value = "10")
-    private Double risultatoNumerico;
-
-    private AlunnoDTO alunnoDiRiferimento;
+    private LocalDate data;
 
     public Long getId() {
         return id;
@@ -33,14 +26,6 @@ public class CompitoInClasseDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getData() {
-        return data;
-    }
-
-    public void setData(LocalDate data) {
-        this.data = data;
     }
 
     public Materia getMateria() {
@@ -51,20 +36,12 @@ public class CompitoInClasseDTO implements Serializable {
         this.materia = materia;
     }
 
-    public Double getRisultatoNumerico() {
-        return risultatoNumerico;
+    public LocalDate getData() {
+        return data;
     }
 
-    public void setRisultatoNumerico(Double risultatoNumerico) {
-        this.risultatoNumerico = risultatoNumerico;
-    }
-
-    public AlunnoDTO getAlunnoDiRiferimento() {
-        return alunnoDiRiferimento;
-    }
-
-    public void setAlunnoDiRiferimento(AlunnoDTO alunnoDiRiferimento) {
-        this.alunnoDiRiferimento = alunnoDiRiferimento;
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 
     @Override
@@ -93,10 +70,8 @@ public class CompitoInClasseDTO implements Serializable {
     public String toString() {
         return "CompitoInClasseDTO{" +
             "id=" + getId() +
-            ", data='" + getData() + "'" +
             ", materia='" + getMateria() + "'" +
-            ", risultatoNumerico=" + getRisultatoNumerico() +
-            ", alunnoDiRiferimento=" + getAlunnoDiRiferimento() +
+            ", data='" + getData() + "'" +
             "}";
     }
 }

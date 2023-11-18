@@ -24,8 +24,8 @@
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "compitoInClasse",
-      "otherEntityRelationshipName": "alunnoDiRiferimento",
+      "otherEntityName": "alunnoCompito",
+      "otherEntityRelationshipName": "alunno",
       "relationshipName": "compitiEseguiti",
       "relationshipSide": "left",
       "relationshipType": "one-to-many"

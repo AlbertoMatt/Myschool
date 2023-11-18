@@ -2,16 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 
 import SharedModule from 'app/shared/shared.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IAlunno } from 'app/entities/alunno/alunno.model';
-import { AlunnoService } from 'app/entities/alunno/service/alunno.service';
 import { Materia } from 'app/entities/enumerations/materia.model';
-import { CompitoInClasseService } from '../service/compito-in-classe.service';
 import { ICompitoInClasse } from '../compito-in-classe.model';
+import { CompitoInClasseService } from '../service/compito-in-classe.service';
 import { CompitoInClasseFormService, CompitoInClasseFormGroup } from './compito-in-classe-form.service';
 
 @Component({
@@ -25,18 +23,13 @@ export class CompitoInClasseUpdateComponent implements OnInit {
   compitoInClasse: ICompitoInClasse | null = null;
   materiaValues = Object.keys(Materia);
 
-  alunnosSharedCollection: IAlunno[] = [];
-
   editForm: CompitoInClasseFormGroup = this.compitoInClasseFormService.createCompitoInClasseFormGroup();
 
   constructor(
     protected compitoInClasseService: CompitoInClasseService,
     protected compitoInClasseFormService: CompitoInClasseFormService,
-    protected alunnoService: AlunnoService,
     protected activatedRoute: ActivatedRoute,
   ) {}
-
-  compareAlunno = (o1: IAlunno | null, o2: IAlunno | null): boolean => this.alunnoService.compareAlunno(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ compitoInClasse }) => {
@@ -44,8 +37,6 @@ export class CompitoInClasseUpdateComponent implements OnInit {
       if (compitoInClasse) {
         this.updateForm(compitoInClasse);
       }
-
-      this.loadRelationshipsOptions();
     });
   }
 
@@ -85,22 +76,5 @@ export class CompitoInClasseUpdateComponent implements OnInit {
   protected updateForm(compitoInClasse: ICompitoInClasse): void {
     this.compitoInClasse = compitoInClasse;
     this.compitoInClasseFormService.resetForm(this.editForm, compitoInClasse);
-
-    this.alunnosSharedCollection = this.alunnoService.addAlunnoToCollectionIfMissing<IAlunno>(
-      this.alunnosSharedCollection,
-      compitoInClasse.alunnoDiRiferimento,
-    );
-  }
-
-  protected loadRelationshipsOptions(): void {
-    this.alunnoService
-      .query()
-      .pipe(map((res: HttpResponse<IAlunno[]>) => res.body ?? []))
-      .pipe(
-        map((alunnos: IAlunno[]) =>
-          this.alunnoService.addAlunnoToCollectionIfMissing<IAlunno>(alunnos, this.compitoInClasse?.alunnoDiRiferimento),
-        ),
-      )
-      .subscribe((alunnos: IAlunno[]) => (this.alunnosSharedCollection = alunnos));
   }
 }

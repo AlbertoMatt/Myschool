@@ -5,34 +5,26 @@
   "entityTableName": "compito_in_classe",
   "fields": [
     {
-      "fieldName": "data",
-      "fieldType": "LocalDate",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "materia",
       "fieldType": "Materia",
       "fieldValidateRules": ["required"],
       "fieldValues": "STORIA,ITALIANO,INGLESE,MATEMATICA"
     },
     {
-      "fieldName": "risultatoNumerico",
-      "fieldType": "Double",
-      "fieldValidateRules": ["min", "max", "required"],
-      "fieldValidateRulesMax": "10",
-      "fieldValidateRulesMin": "0"
+      "fieldName": "data",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
     }
   ],
   "name": "CompitoInClasse",
   "pagination": "pagination",
   "relationships": [
     {
-      "otherEntityName": "alunno",
-      "otherEntityRelationshipName": "compitiEseguiti",
-      "relationshipName": "alunnoDiRiferimento",
-      "relationshipSide": "right",
-      "relationshipType": "many-to-one",
-      "relationshipValidateRules": "required"
+      "otherEntityName": "alunnoCompito",
+      "otherEntityRelationshipName": "compito",
+      "relationshipName": "alunni",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
     }
   ],
   "searchEngine": "no",

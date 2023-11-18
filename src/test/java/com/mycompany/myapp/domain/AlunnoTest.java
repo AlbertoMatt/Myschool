@@ -1,8 +1,8 @@
 package com.mycompany.myapp.domain;
 
+import static com.mycompany.myapp.domain.AlunnoCompitoTestSamples.*;
 import static com.mycompany.myapp.domain.AlunnoTestSamples.*;
 import static com.mycompany.myapp.domain.ClasseTestSamples.*;
-import static com.mycompany.myapp.domain.CompitoInClasseTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mycompany.myapp.web.rest.TestUtil;
@@ -29,23 +29,23 @@ class AlunnoTest {
     @Test
     void compitiEseguitiTest() throws Exception {
         Alunno alunno = getAlunnoRandomSampleGenerator();
-        CompitoInClasse compitoInClasseBack = getCompitoInClasseRandomSampleGenerator();
+        AlunnoCompito alunnoCompitoBack = getAlunnoCompitoRandomSampleGenerator();
 
-        alunno.addCompitiEseguiti(compitoInClasseBack);
-        assertThat(alunno.getCompitiEseguitis()).containsOnly(compitoInClasseBack);
-        assertThat(compitoInClasseBack.getAlunnoDiRiferimento()).isEqualTo(alunno);
+        alunno.addCompitiEseguiti(alunnoCompitoBack);
+        assertThat(alunno.getCompitiEseguitis()).containsOnly(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getAlunno()).isEqualTo(alunno);
 
-        alunno.removeCompitiEseguiti(compitoInClasseBack);
-        assertThat(alunno.getCompitiEseguitis()).doesNotContain(compitoInClasseBack);
-        assertThat(compitoInClasseBack.getAlunnoDiRiferimento()).isNull();
+        alunno.removeCompitiEseguiti(alunnoCompitoBack);
+        assertThat(alunno.getCompitiEseguitis()).doesNotContain(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getAlunno()).isNull();
 
-        alunno.compitiEseguitis(new HashSet<>(Set.of(compitoInClasseBack)));
-        assertThat(alunno.getCompitiEseguitis()).containsOnly(compitoInClasseBack);
-        assertThat(compitoInClasseBack.getAlunnoDiRiferimento()).isEqualTo(alunno);
+        alunno.compitiEseguitis(new HashSet<>(Set.of(alunnoCompitoBack)));
+        assertThat(alunno.getCompitiEseguitis()).containsOnly(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getAlunno()).isEqualTo(alunno);
 
         alunno.setCompitiEseguitis(new HashSet<>());
-        assertThat(alunno.getCompitiEseguitis()).doesNotContain(compitoInClasseBack);
-        assertThat(compitoInClasseBack.getAlunnoDiRiferimento()).isNull();
+        assertThat(alunno.getCompitiEseguitis()).doesNotContain(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getAlunno()).isNull();
     }
 
     @Test

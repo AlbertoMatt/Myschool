@@ -3,30 +3,26 @@ import dayjs from 'dayjs/esm';
 import { ICompitoInClasse, NewCompitoInClasse } from './compito-in-classe.model';
 
 export const sampleWithRequiredData: ICompitoInClasse = {
-  id: 32625,
-  data: dayjs('2023-11-12'),
-  materia: 'ITALIANO',
-  risultatoNumerico: 1.04,
+  id: 5419,
+  materia: 'INGLESE',
+  data: dayjs('2023-11-13'),
 };
 
 export const sampleWithPartialData: ICompitoInClasse = {
-  id: 2389,
+  id: 20239,
+  materia: 'ITALIANO',
   data: dayjs('2023-11-12'),
-  materia: 'INGLESE',
-  risultatoNumerico: 2.91,
 };
 
 export const sampleWithFullData: ICompitoInClasse = {
-  id: 18305,
-  data: dayjs('2023-11-13'),
-  materia: 'INGLESE',
-  risultatoNumerico: 8.62,
+  id: 32395,
+  materia: 'ITALIANO',
+  data: dayjs('2023-11-12'),
 };
 
 export const sampleWithNewData: NewCompitoInClasse = {
-  data: dayjs('2023-11-12'),
   materia: 'MATEMATICA',
-  risultatoNumerico: 8.67,
+  data: dayjs('2023-11-13'),
   id: null,
 };
 

@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
-import com.mycompany.myapp.domain.Alunno;
 import com.mycompany.myapp.domain.CompitoInClasse;
 import com.mycompany.myapp.domain.enumeration.Materia;
 import com.mycompany.myapp.repository.CompitoInClasseRepository;
@@ -35,14 +34,11 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CompitoInClasseResourceIT {
 
-    private static final LocalDate DEFAULT_DATA = LocalDate.ofEpochDay(0L);
-    private static final LocalDate UPDATED_DATA = LocalDate.now(ZoneId.systemDefault());
-
     private static final Materia DEFAULT_MATERIA = Materia.STORIA;
     private static final Materia UPDATED_MATERIA = Materia.ITALIANO;
 
-    private static final Double DEFAULT_RISULTATO_NUMERICO = 0D;
-    private static final Double UPDATED_RISULTATO_NUMERICO = 1D;
+    private static final LocalDate DEFAULT_DATA = LocalDate.ofEpochDay(0L);
+    private static final LocalDate UPDATED_DATA = LocalDate.now(ZoneId.systemDefault());
 
     private static final String ENTITY_API_URL = "/api/compito-in-classes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -71,20 +67,7 @@ class CompitoInClasseResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompitoInClasse createEntity(EntityManager em) {
-        CompitoInClasse compitoInClasse = new CompitoInClasse()
-            .data(DEFAULT_DATA)
-            .materia(DEFAULT_MATERIA)
-            .risultatoNumerico(DEFAULT_RISULTATO_NUMERICO);
-        // Add required entity
-        Alunno alunno;
-        if (TestUtil.findAll(em, Alunno.class).isEmpty()) {
-            alunno = AlunnoResourceIT.createEntity(em);
-            em.persist(alunno);
-            em.flush();
-        } else {
-            alunno = TestUtil.findAll(em, Alunno.class).get(0);
-        }
-        compitoInClasse.setAlunnoDiRiferimento(alunno);
+        CompitoInClasse compitoInClasse = new CompitoInClasse().materia(DEFAULT_MATERIA).data(DEFAULT_DATA);
         return compitoInClasse;
     }
 
@@ -95,20 +78,7 @@ class CompitoInClasseResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompitoInClasse createUpdatedEntity(EntityManager em) {
-        CompitoInClasse compitoInClasse = new CompitoInClasse()
-            .data(UPDATED_DATA)
-            .materia(UPDATED_MATERIA)
-            .risultatoNumerico(UPDATED_RISULTATO_NUMERICO);
-        // Add required entity
-        Alunno alunno;
-        if (TestUtil.findAll(em, Alunno.class).isEmpty()) {
-            alunno = AlunnoResourceIT.createUpdatedEntity(em);
-            em.persist(alunno);
-            em.flush();
-        } else {
-            alunno = TestUtil.findAll(em, Alunno.class).get(0);
-        }
-        compitoInClasse.setAlunnoDiRiferimento(alunno);
+        CompitoInClasse compitoInClasse = new CompitoInClasse().materia(UPDATED_MATERIA).data(UPDATED_DATA);
         return compitoInClasse;
     }
 
@@ -133,9 +103,8 @@ class CompitoInClasseResourceIT {
         List<CompitoInClasse> compitoInClasseList = compitoInClasseRepository.findAll();
         assertThat(compitoInClasseList).hasSize(databaseSizeBeforeCreate + 1);
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
-        assertThat(testCompitoInClasse.getData()).isEqualTo(DEFAULT_DATA);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(DEFAULT_MATERIA);
-        assertThat(testCompitoInClasse.getRisultatoNumerico()).isEqualTo(DEFAULT_RISULTATO_NUMERICO);
+        assertThat(testCompitoInClasse.getData()).isEqualTo(DEFAULT_DATA);
     }
 
     @Test
@@ -161,26 +130,6 @@ class CompitoInClasseResourceIT {
 
     @Test
     @Transactional
-    void checkDataIsRequired() throws Exception {
-        int databaseSizeBeforeTest = compitoInClasseRepository.findAll().size();
-        // set the field null
-        compitoInClasse.setData(null);
-
-        // Create the CompitoInClasse, which fails.
-        CompitoInClasseDTO compitoInClasseDTO = compitoInClasseMapper.toDto(compitoInClasse);
-
-        restCompitoInClasseMockMvc
-            .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(compitoInClasseDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<CompitoInClasse> compitoInClasseList = compitoInClasseRepository.findAll();
-        assertThat(compitoInClasseList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void checkMateriaIsRequired() throws Exception {
         int databaseSizeBeforeTest = compitoInClasseRepository.findAll().size();
         // set the field null
@@ -201,10 +150,10 @@ class CompitoInClasseResourceIT {
 
     @Test
     @Transactional
-    void checkRisultatoNumericoIsRequired() throws Exception {
+    void checkDataIsRequired() throws Exception {
         int databaseSizeBeforeTest = compitoInClasseRepository.findAll().size();
         // set the field null
-        compitoInClasse.setRisultatoNumerico(null);
+        compitoInClasse.setData(null);
 
         // Create the CompitoInClasse, which fails.
         CompitoInClasseDTO compitoInClasseDTO = compitoInClasseMapper.toDto(compitoInClasse);
@@ -231,9 +180,8 @@ class CompitoInClasseResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(compitoInClasse.getId().intValue())))
-            .andExpect(jsonPath("$.[*].data").value(hasItem(DEFAULT_DATA.toString())))
             .andExpect(jsonPath("$.[*].materia").value(hasItem(DEFAULT_MATERIA.toString())))
-            .andExpect(jsonPath("$.[*].risultatoNumerico").value(hasItem(DEFAULT_RISULTATO_NUMERICO.doubleValue())));
+            .andExpect(jsonPath("$.[*].data").value(hasItem(DEFAULT_DATA.toString())));
     }
 
     @Test
@@ -248,9 +196,8 @@ class CompitoInClasseResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(compitoInClasse.getId().intValue()))
-            .andExpect(jsonPath("$.data").value(DEFAULT_DATA.toString()))
             .andExpect(jsonPath("$.materia").value(DEFAULT_MATERIA.toString()))
-            .andExpect(jsonPath("$.risultatoNumerico").value(DEFAULT_RISULTATO_NUMERICO.doubleValue()));
+            .andExpect(jsonPath("$.data").value(DEFAULT_DATA.toString()));
     }
 
     @Test
@@ -272,7 +219,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse updatedCompitoInClasse = compitoInClasseRepository.findById(compitoInClasse.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedCompitoInClasse are not directly saved in db
         em.detach(updatedCompitoInClasse);
-        updatedCompitoInClasse.data(UPDATED_DATA).materia(UPDATED_MATERIA).risultatoNumerico(UPDATED_RISULTATO_NUMERICO);
+        updatedCompitoInClasse.materia(UPDATED_MATERIA).data(UPDATED_DATA);
         CompitoInClasseDTO compitoInClasseDTO = compitoInClasseMapper.toDto(updatedCompitoInClasse);
 
         restCompitoInClasseMockMvc
@@ -287,9 +234,8 @@ class CompitoInClasseResourceIT {
         List<CompitoInClasse> compitoInClasseList = compitoInClasseRepository.findAll();
         assertThat(compitoInClasseList).hasSize(databaseSizeBeforeUpdate);
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
-        assertThat(testCompitoInClasse.getData()).isEqualTo(UPDATED_DATA);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(UPDATED_MATERIA);
-        assertThat(testCompitoInClasse.getRisultatoNumerico()).isEqualTo(UPDATED_RISULTATO_NUMERICO);
+        assertThat(testCompitoInClasse.getData()).isEqualTo(UPDATED_DATA);
     }
 
     @Test
@@ -371,8 +317,6 @@ class CompitoInClasseResourceIT {
         CompitoInClasse partialUpdatedCompitoInClasse = new CompitoInClasse();
         partialUpdatedCompitoInClasse.setId(compitoInClasse.getId());
 
-        partialUpdatedCompitoInClasse.risultatoNumerico(UPDATED_RISULTATO_NUMERICO);
-
         restCompitoInClasseMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCompitoInClasse.getId())
@@ -385,9 +329,8 @@ class CompitoInClasseResourceIT {
         List<CompitoInClasse> compitoInClasseList = compitoInClasseRepository.findAll();
         assertThat(compitoInClasseList).hasSize(databaseSizeBeforeUpdate);
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
-        assertThat(testCompitoInClasse.getData()).isEqualTo(DEFAULT_DATA);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(DEFAULT_MATERIA);
-        assertThat(testCompitoInClasse.getRisultatoNumerico()).isEqualTo(UPDATED_RISULTATO_NUMERICO);
+        assertThat(testCompitoInClasse.getData()).isEqualTo(DEFAULT_DATA);
     }
 
     @Test
@@ -402,7 +345,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse partialUpdatedCompitoInClasse = new CompitoInClasse();
         partialUpdatedCompitoInClasse.setId(compitoInClasse.getId());
 
-        partialUpdatedCompitoInClasse.data(UPDATED_DATA).materia(UPDATED_MATERIA).risultatoNumerico(UPDATED_RISULTATO_NUMERICO);
+        partialUpdatedCompitoInClasse.materia(UPDATED_MATERIA).data(UPDATED_DATA);
 
         restCompitoInClasseMockMvc
             .perform(
@@ -416,9 +359,8 @@ class CompitoInClasseResourceIT {
         List<CompitoInClasse> compitoInClasseList = compitoInClasseRepository.findAll();
         assertThat(compitoInClasseList).hasSize(databaseSizeBeforeUpdate);
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
-        assertThat(testCompitoInClasse.getData()).isEqualTo(UPDATED_DATA);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(UPDATED_MATERIA);
-        assertThat(testCompitoInClasse.getRisultatoNumerico()).isEqualTo(UPDATED_RISULTATO_NUMERICO);
+        assertThat(testCompitoInClasse.getData()).isEqualTo(UPDATED_DATA);
     }
 
     @Test

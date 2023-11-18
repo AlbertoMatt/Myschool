@@ -12,6 +12,19 @@
         </div>
 
         <div class="mb-3">
+          <label class="form-label" for="field_materia">Materia</label>
+          <select class="form-control" name="materia" formControlName="materia" id="field_materia" data-cy="materia">
+            <option [ngValue]="null"></option>
+            <option *ngFor="let materia of materiaValues" [value]="materia">{{ materia }}</option>
+          </select>
+          <div *ngIf="editForm.get('materia')!.invalid && (editForm.get('materia')!.dirty || editForm.get('materia')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('materia')?.errors?.required"
+              >Translation missing for entity.validation.required</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
           <label class="form-label" for="field_data">Data</label>
           <div class="input-group">
             <input
@@ -31,75 +44,6 @@
               >Translation missing for entity.validation.required</small
             >
           </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_materia">Materia</label>
-          <select class="form-control" name="materia" formControlName="materia" id="field_materia" data-cy="materia">
-            <option [ngValue]="null"></option>
-            <option *ngFor="let materia of materiaValues" [value]="materia">{{ materia }}</option>
-          </select>
-          <div *ngIf="editForm.get('materia')!.invalid && (editForm.get('materia')!.dirty || editForm.get('materia')!.touched)">
-            <small class="form-text text-danger" *ngIf="editForm.get('materia')?.errors?.required"
-              >Translation missing for entity.validation.required</small
-            >
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_risultatoNumerico">Risultato Numerico</label>
-          <input
-            type="number"
-            class="form-control"
-            name="risultatoNumerico"
-            id="field_risultatoNumerico"
-            data-cy="risultatoNumerico"
-            formControlName="risultatoNumerico"
-          />
-          <div
-            *ngIf="
-              editForm.get('risultatoNumerico')!.invalid &&
-              (editForm.get('risultatoNumerico')!.dirty || editForm.get('risultatoNumerico')!.touched)
-            "
-          >
-            <small class="form-text text-danger" *ngIf="editForm.get('risultatoNumerico')?.errors?.required"
-              >Translation missing for entity.validation.required</small
-            >
-            <small class="form-text text-danger" *ngIf="editForm.get('risultatoNumerico')?.errors?.min"
-              >Translation missing for entity.validation.min</small
-            >
-            <small class="form-text text-danger" *ngIf="editForm.get('risultatoNumerico')?.errors?.max"
-              >Translation missing for entity.validation.max</small
-            >
-            <small class="form-text text-danger" [hidden]="!editForm.get('risultatoNumerico')?.errors?.number"
-              >Translation missing for entity.validation.number</small
-            >
-          </div>
-        </div>
-
-        <div class="mb-3">
-          <label class="form-label" for="field_alunnoDiRiferimento">Alunno Di Riferimento</label>
-          <select
-            class="form-control"
-            id="field_alunnoDiRiferimento"
-            data-cy="alunnoDiRiferimento"
-            name="alunnoDiRiferimento"
-            formControlName="alunnoDiRiferimento"
-            [compareWith]="compareAlunno"
-          >
-            <option *ngIf="editForm.get(['alunnoDiRiferimento'])!.value == null" [ngValue]="null" selected></option>
-            <option [ngValue]="alunnoOption" *ngFor="let alunnoOption of alunnosSharedCollection">{{ alunnoOption.id }}</option>
-          </select>
-        </div>
-        <div
-          *ngIf="
-            editForm.get(['alunnoDiRiferimento'])!.invalid &&
-            (editForm.get(['alunnoDiRiferimento'])!.dirty || editForm.get(['alunnoDiRiferimento'])!.touched)
-          "
-        >
-          <small class="form-text text-danger" *ngIf="editForm.get(['alunnoDiRiferimento'])?.errors?.required"
-            >Translation missing for entity.validation.required</small
-          >
         </div>
       </div>
 

@@ -6,8 +6,6 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, Subject, from } from 'rxjs';
 
-import { IAlunno } from 'app/entities/alunno/alunno.model';
-import { AlunnoService } from 'app/entities/alunno/service/alunno.service';
 import { CompitoInClasseService } from '../service/compito-in-classe.service';
 import { ICompitoInClasse } from '../compito-in-classe.model';
 import { CompitoInClasseFormService } from './compito-in-classe-form.service';
@@ -20,7 +18,6 @@ describe('CompitoInClasse Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let compitoInClasseFormService: CompitoInClasseFormService;
   let compitoInClasseService: CompitoInClasseService;
-  let alunnoService: AlunnoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -42,43 +39,17 @@ describe('CompitoInClasse Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     compitoInClasseFormService = TestBed.inject(CompitoInClasseFormService);
     compitoInClasseService = TestBed.inject(CompitoInClasseService);
-    alunnoService = TestBed.inject(AlunnoService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Alunno query and add missing value', () => {
-      const compitoInClasse: ICompitoInClasse = { id: 456 };
-      const alunnoDiRiferimento: IAlunno = { id: 620 };
-      compitoInClasse.alunnoDiRiferimento = alunnoDiRiferimento;
-
-      const alunnoCollection: IAlunno[] = [{ id: 12016 }];
-      jest.spyOn(alunnoService, 'query').mockReturnValue(of(new HttpResponse({ body: alunnoCollection })));
-      const additionalAlunnos = [alunnoDiRiferimento];
-      const expectedCollection: IAlunno[] = [...additionalAlunnos, ...alunnoCollection];
-      jest.spyOn(alunnoService, 'addAlunnoToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ compitoInClasse });
-      comp.ngOnInit();
-
-      expect(alunnoService.query).toHaveBeenCalled();
-      expect(alunnoService.addAlunnoToCollectionIfMissing).toHaveBeenCalledWith(
-        alunnoCollection,
-        ...additionalAlunnos.map(expect.objectContaining),
-      );
-      expect(comp.alunnosSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const compitoInClasse: ICompitoInClasse = { id: 456 };
-      const alunnoDiRiferimento: IAlunno = { id: 2528 };
-      compitoInClasse.alunnoDiRiferimento = alunnoDiRiferimento;
 
       activatedRoute.data = of({ compitoInClasse });
       comp.ngOnInit();
 
-      expect(comp.alunnosSharedCollection).toContain(alunnoDiRiferimento);
       expect(comp.compitoInClasse).toEqual(compitoInClasse);
     });
   });
@@ -148,18 +119,6 @@ describe('CompitoInClasse Management Update Component', () => {
       expect(compitoInClasseService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareAlunno', () => {
-      it('Should forward to alunnoService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(alunnoService, 'compareAlunno');
-        comp.compareAlunno(entity, entity2);
-        expect(alunnoService.compareAlunno).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

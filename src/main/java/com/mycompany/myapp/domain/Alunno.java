@@ -38,10 +38,10 @@ public class Alunno implements Serializable {
     @Column(name = "data_nascita", nullable = false)
     private LocalDate dataNascita;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "alunnoDiRiferimento")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "alunno")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
-    @JsonIgnoreProperties(value = { "alunnoDiRiferimento" }, allowSetters = true)
-    private Set<CompitoInClasse> compitiEseguitis = new HashSet<>();
+    @JsonIgnoreProperties(value = { "alunno", "compito" }, allowSetters = true)
+    private Set<AlunnoCompito> compitiEseguitis = new HashSet<>();
 
     @ManyToOne(optional = false)
     @NotNull
@@ -102,34 +102,34 @@ public class Alunno implements Serializable {
         this.dataNascita = dataNascita;
     }
 
-    public Set<CompitoInClasse> getCompitiEseguitis() {
+    public Set<AlunnoCompito> getCompitiEseguitis() {
         return this.compitiEseguitis;
     }
 
-    public void setCompitiEseguitis(Set<CompitoInClasse> compitoInClasses) {
+    public void setCompitiEseguitis(Set<AlunnoCompito> alunnoCompitos) {
         if (this.compitiEseguitis != null) {
-            this.compitiEseguitis.forEach(i -> i.setAlunnoDiRiferimento(null));
+            this.compitiEseguitis.forEach(i -> i.setAlunno(null));
         }
-        if (compitoInClasses != null) {
-            compitoInClasses.forEach(i -> i.setAlunnoDiRiferimento(this));
+        if (alunnoCompitos != null) {
+            alunnoCompitos.forEach(i -> i.setAlunno(this));
         }
-        this.compitiEseguitis = compitoInClasses;
+        this.compitiEseguitis = alunnoCompitos;
     }
 
-    public Alunno compitiEseguitis(Set<CompitoInClasse> compitoInClasses) {
-        this.setCompitiEseguitis(compitoInClasses);
+    public Alunno compitiEseguitis(Set<AlunnoCompito> alunnoCompitos) {
+        this.setCompitiEseguitis(alunnoCompitos);
         return this;
     }
 
-    public Alunno addCompitiEseguiti(CompitoInClasse compitoInClasse) {
-        this.compitiEseguitis.add(compitoInClasse);
-        compitoInClasse.setAlunnoDiRiferimento(this);
+    public Alunno addCompitiEseguiti(AlunnoCompito alunnoCompito) {
+        this.compitiEseguitis.add(alunnoCompito);
+        alunnoCompito.setAlunno(this);
         return this;
     }
 
-    public Alunno removeCompitiEseguiti(CompitoInClasse compitoInClasse) {
-        this.compitiEseguitis.remove(compitoInClasse);
-        compitoInClasse.setAlunnoDiRiferimento(null);
+    public Alunno removeCompitiEseguiti(AlunnoCompito alunnoCompito) {
+        this.compitiEseguitis.remove(alunnoCompito);
+        alunnoCompito.setAlunno(null);
         return this;
     }
 

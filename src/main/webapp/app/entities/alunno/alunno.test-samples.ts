@@ -3,29 +3,29 @@ import dayjs from 'dayjs/esm';
 import { IAlunno, NewAlunno } from './alunno.model';
 
 export const sampleWithRequiredData: IAlunno = {
-  id: 5372,
-  nome: 'meh hydrolyze condemn',
-  cognome: 'plus times like',
-  dataNascita: dayjs('2023-11-13'),
+  id: 11357,
+  nome: 'psst',
+  cognome: 'boohoo franchise woot',
+  dataNascita: dayjs('2023-11-12'),
 };
 
 export const sampleWithPartialData: IAlunno = {
-  id: 4870,
-  nome: 'alongside',
-  cognome: 'psst nucleotidase',
+  id: 6094,
+  nome: 'ha whoever',
+  cognome: 'almanac',
   dataNascita: dayjs('2023-11-13'),
 };
 
 export const sampleWithFullData: IAlunno = {
-  id: 21238,
-  nome: 'yum underground',
-  cognome: 'cordon though blah',
-  dataNascita: dayjs('2023-11-12'),
+  id: 5895,
+  nome: 'proliferate',
+  cognome: 'intently which',
+  dataNascita: dayjs('2023-11-13'),
 };
 
 export const sampleWithNewData: NewAlunno = {
-  nome: 'indeed regularly dapper',
-  cognome: 'boo',
+  nome: 'till excluding',
+  cognome: 'amongst bath',
   dataNascita: dayjs('2023-11-13'),
   id: null,
 };

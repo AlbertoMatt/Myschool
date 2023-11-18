@@ -18,10 +18,8 @@ type CompitoInClasseFormDefaults = Pick<NewCompitoInClasse, 'id'>;
 
 type CompitoInClasseFormGroupContent = {
   id: FormControl<ICompitoInClasse['id'] | NewCompitoInClasse['id']>;
-  data: FormControl<ICompitoInClasse['data']>;
   materia: FormControl<ICompitoInClasse['materia']>;
-  risultatoNumerico: FormControl<ICompitoInClasse['risultatoNumerico']>;
-  alunnoDiRiferimento: FormControl<ICompitoInClasse['alunnoDiRiferimento']>;
+  data: FormControl<ICompitoInClasse['data']>;
 };
 
 export type CompitoInClasseFormGroup = FormGroup<CompitoInClasseFormGroupContent>;
@@ -41,16 +39,10 @@ export class CompitoInClasseFormService {
           validators: [Validators.required],
         },
       ),
-      data: new FormControl(compitoInClasseRawValue.data, {
-        validators: [Validators.required],
-      }),
       materia: new FormControl(compitoInClasseRawValue.materia, {
         validators: [Validators.required],
       }),
-      risultatoNumerico: new FormControl(compitoInClasseRawValue.risultatoNumerico, {
-        validators: [Validators.required, Validators.min(0), Validators.max(10)],
-      }),
-      alunnoDiRiferimento: new FormControl(compitoInClasseRawValue.alunnoDiRiferimento, {
+      data: new FormControl(compitoInClasseRawValue.data, {
         validators: [Validators.required],
       }),
     });

@@ -1,0 +1,41 @@
+{
+  "applications": "*",
+  "changelogDate": "20231113103813",
+  "dto": "mapstruct",
+  "entityTableName": "alunno_compito",
+  "fields": [
+    {
+      "fieldName": "risultatoNumerico",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "10",
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "dataRestituizione",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "name": "AlunnoCompito",
+  "pagination": "pagination",
+  "relationships": [
+    {
+      "otherEntityName": "alunno",
+      "otherEntityRelationshipName": "compitiEseguiti",
+      "relationshipName": "alunno",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    },
+    {
+      "otherEntityName": "compitoInClasse",
+      "otherEntityRelationshipName": "alunni",
+      "relationshipName": "compito",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": "required"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceImpl"
+}

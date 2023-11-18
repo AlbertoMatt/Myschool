@@ -1,10 +1,12 @@
 package com.mycompany.myapp.domain;
 
-import static com.mycompany.myapp.domain.AlunnoTestSamples.*;
+import static com.mycompany.myapp.domain.AlunnoCompitoTestSamples.*;
 import static com.mycompany.myapp.domain.CompitoInClasseTestSamples.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.mycompany.myapp.web.rest.TestUtil;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.jupiter.api.Test;
 
 class CompitoInClasseTest {
@@ -24,14 +26,24 @@ class CompitoInClasseTest {
     }
 
     @Test
-    void alunnoDiRiferimentoTest() throws Exception {
+    void alunniTest() throws Exception {
         CompitoInClasse compitoInClasse = getCompitoInClasseRandomSampleGenerator();
-        Alunno alunnoBack = getAlunnoRandomSampleGenerator();
+        AlunnoCompito alunnoCompitoBack = getAlunnoCompitoRandomSampleGenerator();
 
-        compitoInClasse.setAlunnoDiRiferimento(alunnoBack);
-        assertThat(compitoInClasse.getAlunnoDiRiferimento()).isEqualTo(alunnoBack);
+        compitoInClasse.addAlunni(alunnoCompitoBack);
+        assertThat(compitoInClasse.getAlunnis()).containsOnly(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getCompito()).isEqualTo(compitoInClasse);
 
-        compitoInClasse.alunnoDiRiferimento(null);
-        assertThat(compitoInClasse.getAlunnoDiRiferimento()).isNull();
+        compitoInClasse.removeAlunni(alunnoCompitoBack);
+        assertThat(compitoInClasse.getAlunnis()).doesNotContain(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getCompito()).isNull();
+
+        compitoInClasse.alunnis(new HashSet<>(Set.of(alunnoCompitoBack)));
+        assertThat(compitoInClasse.getAlunnis()).containsOnly(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getCompito()).isEqualTo(compitoInClasse);
+
+        compitoInClasse.setAlunnis(new HashSet<>());
+        assertThat(compitoInClasse.getAlunnis()).doesNotContain(alunnoCompitoBack);
+        assertThat(alunnoCompitoBack.getCompito()).isNull();
     }
 }

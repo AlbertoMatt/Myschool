@@ -38,27 +38,15 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="data">
-            <div class="d-flex">
-              <span>Data</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="materia">
             <div class="d-flex">
               <span>Materia</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="risultatoNumerico">
+          <th scope="col" jhiSortBy="data">
             <div class="d-flex">
-              <span>Risultato Numerico</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
-          <th scope="col" jhiSortBy="alunnoDiRiferimento.id">
-            <div class="d-flex">
-              <span>Alunno Di Riferimento</span>
+              <span>Data</span>
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
@@ -70,14 +58,8 @@
           <td>
             <a [routerLink]="['/compito-in-classe', compitoInClasse.id, 'view']">{{ compitoInClasse.id }}</a>
           </td>
-          <td>{{ compitoInClasse.data | formatMediumDate }}</td>
           <td>{{ compitoInClasse.materia }}</td>
-          <td>{{ compitoInClasse.risultatoNumerico }}</td>
-          <td>
-            <div *ngIf="compitoInClasse.alunnoDiRiferimento">
-              <a [routerLink]="['/alunno', compitoInClasse.alunnoDiRiferimento.id, 'view']">{{ compitoInClasse.alunnoDiRiferimento.id }}</a>
-            </div>
-          </td>
+          <td>{{ compitoInClasse.data | formatMediumDate }}</td>
           <td class="text-end">
             <div class="btn-group">
               <a

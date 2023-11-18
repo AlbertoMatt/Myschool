@@ -17,6 +17,9 @@
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20231113103913_added_entity_constraints_Alunno.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20231113104013_added_entity_constraints_CompitoInClasse.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231118111813_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231113103813_added_entity_AlunnoCompito.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20231113103813_added_entity_constraints_AlunnoCompito.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

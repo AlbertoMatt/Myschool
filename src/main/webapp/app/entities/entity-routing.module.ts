@@ -19,6 +19,11 @@ import { RouterModule } from '@angular/router';
         data: { pageTitle: 'CompitoInClasses' },
         loadChildren: () => import('./compito-in-classe/compito-in-classe.routes'),
       },
+      {
+        path: 'alunno-compito',
+        data: { pageTitle: 'AlunnoCompitos' },
+        loadChildren: () => import('./alunno-compito/alunno-compito.routes'),
+      },
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ]),
   ],

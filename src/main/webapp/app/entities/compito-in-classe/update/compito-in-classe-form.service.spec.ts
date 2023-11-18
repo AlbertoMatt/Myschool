@@ -20,10 +20,8 @@ describe('CompitoInClasse Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            data: expect.any(Object),
             materia: expect.any(Object),
-            risultatoNumerico: expect.any(Object),
-            alunnoDiRiferimento: expect.any(Object),
+            data: expect.any(Object),
           }),
         );
       });
@@ -34,10 +32,8 @@ describe('CompitoInClasse Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
-            data: expect.any(Object),
             materia: expect.any(Object),
-            risultatoNumerico: expect.any(Object),
-            alunnoDiRiferimento: expect.any(Object),
+            data: expect.any(Object),
           }),
         );
       });
