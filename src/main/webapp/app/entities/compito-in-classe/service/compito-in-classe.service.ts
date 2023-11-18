@@ -14,8 +14,9 @@ import { ICompitoInClasse, NewCompitoInClasse } from '../compito-in-classe.model
 
 export type PartialUpdateCompitoInClasse = Partial<ICompitoInClasse> & Pick<ICompitoInClasse, 'id'>;
 
-type RestOf<T extends ICompitoInClasse | NewCompitoInClasse> = Omit<T, 'data'> & {
+type RestOf<T extends ICompitoInClasse | NewCompitoInClasse> = Omit<T, 'data' | 'dataRestituizione'> & {
   data?: string | null;
+  dataRestituizione?: string | null;
 };
 
 export type RestCompitoInClasse = RestOf<ICompitoInClasse>;
@@ -112,6 +113,7 @@ export class CompitoInClasseService {
     return {
       ...compitoInClasse,
       data: compitoInClasse.data?.format(DATE_FORMAT) ?? null,
+      dataRestituizione: compitoInClasse.dataRestituizione?.toJSON() ?? null,
     };
   }
 
@@ -119,6 +121,7 @@ export class CompitoInClasseService {
     return {
       ...restCompitoInClasse,
       data: restCompitoInClasse.data ? dayjs(restCompitoInClasse.data) : undefined,
+      dataRestituizione: restCompitoInClasse.dataRestituizione ? dayjs(restCompitoInClasse.dataRestituizione) : undefined,
     };
   }
 

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -29,9 +28,6 @@ public class AlunnoCompito implements Serializable {
     @DecimalMax(value = "10")
     @Column(name = "risultato_numerico", nullable = false)
     private Double risultatoNumerico;
-
-    @Column(name = "data_restituizione")
-    private ZonedDateTime dataRestituizione;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -69,19 +65,6 @@ public class AlunnoCompito implements Serializable {
 
     public void setRisultatoNumerico(Double risultatoNumerico) {
         this.risultatoNumerico = risultatoNumerico;
-    }
-
-    public ZonedDateTime getDataRestituizione() {
-        return this.dataRestituizione;
-    }
-
-    public AlunnoCompito dataRestituizione(ZonedDateTime dataRestituizione) {
-        this.setDataRestituizione(dataRestituizione);
-        return this;
-    }
-
-    public void setDataRestituizione(ZonedDateTime dataRestituizione) {
-        this.dataRestituizione = dataRestituizione;
     }
 
     public Alunno getAlunno() {
@@ -135,7 +118,6 @@ public class AlunnoCompito implements Serializable {
         return "AlunnoCompito{" +
             "id=" + getId() +
             ", risultatoNumerico=" + getRisultatoNumerico() +
-            ", dataRestituizione='" + getDataRestituizione() + "'" +
             "}";
     }
 }

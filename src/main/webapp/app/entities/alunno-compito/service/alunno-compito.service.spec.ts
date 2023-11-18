@@ -4,11 +4,10 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { IAlunnoCompito } from '../alunno-compito.model';
 import { sampleWithRequiredData, sampleWithNewData, sampleWithPartialData, sampleWithFullData } from '../alunno-compito.test-samples';
 
-import { AlunnoCompitoService, RestAlunnoCompito } from './alunno-compito.service';
+import { AlunnoCompitoService } from './alunno-compito.service';
 
-const requireRestSample: RestAlunnoCompito = {
+const requireRestSample: IAlunnoCompito = {
   ...sampleWithRequiredData,
-  dataRestituizione: sampleWithRequiredData.dataRestituizione?.toJSON(),
 };
 
 describe('AlunnoCompito Service', () => {

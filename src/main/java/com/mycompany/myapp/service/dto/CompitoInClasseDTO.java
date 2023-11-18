@@ -4,6 +4,7 @@ import com.mycompany.myapp.domain.enumeration.Materia;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -19,6 +20,8 @@ public class CompitoInClasseDTO implements Serializable {
 
     @NotNull
     private LocalDate data;
+
+    private ZonedDateTime dataRestituizione;
 
     public Long getId() {
         return id;
@@ -42,6 +45,14 @@ public class CompitoInClasseDTO implements Serializable {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public ZonedDateTime getDataRestituizione() {
+        return dataRestituizione;
+    }
+
+    public void setDataRestituizione(ZonedDateTime dataRestituizione) {
+        this.dataRestituizione = dataRestituizione;
     }
 
     @Override
@@ -72,6 +83,7 @@ public class CompitoInClasseDTO implements Serializable {
             "id=" + getId() +
             ", materia='" + getMateria() + "'" +
             ", data='" + getData() + "'" +
+            ", dataRestituizione='" + getDataRestituizione() + "'" +
             "}";
     }
 }

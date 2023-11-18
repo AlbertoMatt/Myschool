@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import org.hibernate.annotations.Cache;
@@ -35,6 +36,9 @@ public class CompitoInClasse implements Serializable {
     @NotNull
     @Column(name = "data", nullable = false)
     private LocalDate data;
+
+    @Column(name = "data_restituizione")
+    private ZonedDateTime dataRestituizione;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "compito")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -80,6 +84,19 @@ public class CompitoInClasse implements Serializable {
 
     public void setData(LocalDate data) {
         this.data = data;
+    }
+
+    public ZonedDateTime getDataRestituizione() {
+        return this.dataRestituizione;
+    }
+
+    public CompitoInClasse dataRestituizione(ZonedDateTime dataRestituizione) {
+        this.setDataRestituizione(dataRestituizione);
+        return this;
+    }
+
+    public void setDataRestituizione(ZonedDateTime dataRestituizione) {
+        this.dataRestituizione = dataRestituizione;
     }
 
     public Set<AlunnoCompito> getAlunnis() {
@@ -139,6 +156,7 @@ public class CompitoInClasse implements Serializable {
             "id=" + getId() +
             ", materia='" + getMateria() + "'" +
             ", data='" + getData() + "'" +
+            ", dataRestituizione='" + getDataRestituizione() + "'" +
             "}";
     }
 }

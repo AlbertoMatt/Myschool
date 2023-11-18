@@ -76,10 +76,10 @@ describe('AlunnoCompito Management Update Component', () => {
 
     it('Should call CompitoInClasse query and add missing value', () => {
       const alunnoCompito: IAlunnoCompito = { id: 456 };
-      const compito: ICompitoInClasse = { id: 18876 };
+      const compito: ICompitoInClasse = { id: 32625 };
       alunnoCompito.compito = compito;
 
-      const compitoInClasseCollection: ICompitoInClasse[] = [{ id: 12510 }];
+      const compitoInClasseCollection: ICompitoInClasse[] = [{ id: 28611 }];
       jest.spyOn(compitoInClasseService, 'query').mockReturnValue(of(new HttpResponse({ body: compitoInClasseCollection })));
       const additionalCompitoInClasses = [compito];
       const expectedCollection: ICompitoInClasse[] = [...additionalCompitoInClasses, ...compitoInClasseCollection];
@@ -100,7 +100,7 @@ describe('AlunnoCompito Management Update Component', () => {
       const alunnoCompito: IAlunnoCompito = { id: 456 };
       const alunno: IAlunno = { id: 21808 };
       alunnoCompito.alunno = alunno;
-      const compito: ICompitoInClasse = { id: 27058 };
+      const compito: ICompitoInClasse = { id: 11740 };
       alunnoCompito.compito = compito;
 
       activatedRoute.data = of({ alunnoCompito });

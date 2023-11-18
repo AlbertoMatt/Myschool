@@ -2,7 +2,6 @@ package com.mycompany.myapp.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -17,8 +16,6 @@ public class AlunnoCompitoDTO implements Serializable {
     @DecimalMin(value = "0")
     @DecimalMax(value = "10")
     private Double risultatoNumerico;
-
-    private ZonedDateTime dataRestituizione;
 
     private AlunnoDTO alunno;
 
@@ -38,14 +35,6 @@ public class AlunnoCompitoDTO implements Serializable {
 
     public void setRisultatoNumerico(Double risultatoNumerico) {
         this.risultatoNumerico = risultatoNumerico;
-    }
-
-    public ZonedDateTime getDataRestituizione() {
-        return dataRestituizione;
-    }
-
-    public void setDataRestituizione(ZonedDateTime dataRestituizione) {
-        this.dataRestituizione = dataRestituizione;
     }
 
     public AlunnoDTO getAlunno() {
@@ -91,7 +80,6 @@ public class AlunnoCompitoDTO implements Serializable {
         return "AlunnoCompitoDTO{" +
             "id=" + getId() +
             ", risultatoNumerico=" + getRisultatoNumerico() +
-            ", dataRestituizione='" + getDataRestituizione() + "'" +
             ", alunno=" + getAlunno() +
             ", compito=" + getCompito() +
             "}";

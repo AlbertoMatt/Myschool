@@ -22,6 +22,10 @@
         <dd>
           <span>{{ compitoInClasse.data | formatMediumDate }}</span>
         </dd>
+        <dt><span>Data Restituizione</span></dt>
+        <dd>
+          <span>{{ compitoInClasse.dataRestituizione | formatMediumDatetime }}</span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import static com.mycompany.myapp.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -12,8 +13,11 @@ import com.mycompany.myapp.repository.CompitoInClasseRepository;
 import com.mycompany.myapp.service.dto.CompitoInClasseDTO;
 import com.mycompany.myapp.service.mapper.CompitoInClasseMapper;
 import jakarta.persistence.EntityManager;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -39,6 +43,9 @@ class CompitoInClasseResourceIT {
 
     private static final LocalDate DEFAULT_DATA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATA = LocalDate.now(ZoneId.systemDefault());
+
+    private static final ZonedDateTime DEFAULT_DATA_RESTITUIZIONE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
+    private static final ZonedDateTime UPDATED_DATA_RESTITUIZIONE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     private static final String ENTITY_API_URL = "/api/compito-in-classes";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -67,7 +74,10 @@ class CompitoInClasseResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompitoInClasse createEntity(EntityManager em) {
-        CompitoInClasse compitoInClasse = new CompitoInClasse().materia(DEFAULT_MATERIA).data(DEFAULT_DATA);
+        CompitoInClasse compitoInClasse = new CompitoInClasse()
+            .materia(DEFAULT_MATERIA)
+            .data(DEFAULT_DATA)
+            .dataRestituizione(DEFAULT_DATA_RESTITUIZIONE);
         return compitoInClasse;
     }
 
@@ -78,7 +88,10 @@ class CompitoInClasseResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CompitoInClasse createUpdatedEntity(EntityManager em) {
-        CompitoInClasse compitoInClasse = new CompitoInClasse().materia(UPDATED_MATERIA).data(UPDATED_DATA);
+        CompitoInClasse compitoInClasse = new CompitoInClasse()
+            .materia(UPDATED_MATERIA)
+            .data(UPDATED_DATA)
+            .dataRestituizione(UPDATED_DATA_RESTITUIZIONE);
         return compitoInClasse;
     }
 
@@ -105,6 +118,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(DEFAULT_MATERIA);
         assertThat(testCompitoInClasse.getData()).isEqualTo(DEFAULT_DATA);
+        assertThat(testCompitoInClasse.getDataRestituizione()).isEqualTo(DEFAULT_DATA_RESTITUIZIONE);
     }
 
     @Test
@@ -181,7 +195,8 @@ class CompitoInClasseResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(compitoInClasse.getId().intValue())))
             .andExpect(jsonPath("$.[*].materia").value(hasItem(DEFAULT_MATERIA.toString())))
-            .andExpect(jsonPath("$.[*].data").value(hasItem(DEFAULT_DATA.toString())));
+            .andExpect(jsonPath("$.[*].data").value(hasItem(DEFAULT_DATA.toString())))
+            .andExpect(jsonPath("$.[*].dataRestituizione").value(hasItem(sameInstant(DEFAULT_DATA_RESTITUIZIONE))));
     }
 
     @Test
@@ -197,7 +212,8 @@ class CompitoInClasseResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(compitoInClasse.getId().intValue()))
             .andExpect(jsonPath("$.materia").value(DEFAULT_MATERIA.toString()))
-            .andExpect(jsonPath("$.data").value(DEFAULT_DATA.toString()));
+            .andExpect(jsonPath("$.data").value(DEFAULT_DATA.toString()))
+            .andExpect(jsonPath("$.dataRestituizione").value(sameInstant(DEFAULT_DATA_RESTITUIZIONE)));
     }
 
     @Test
@@ -219,7 +235,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse updatedCompitoInClasse = compitoInClasseRepository.findById(compitoInClasse.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedCompitoInClasse are not directly saved in db
         em.detach(updatedCompitoInClasse);
-        updatedCompitoInClasse.materia(UPDATED_MATERIA).data(UPDATED_DATA);
+        updatedCompitoInClasse.materia(UPDATED_MATERIA).data(UPDATED_DATA).dataRestituizione(UPDATED_DATA_RESTITUIZIONE);
         CompitoInClasseDTO compitoInClasseDTO = compitoInClasseMapper.toDto(updatedCompitoInClasse);
 
         restCompitoInClasseMockMvc
@@ -236,6 +252,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(UPDATED_MATERIA);
         assertThat(testCompitoInClasse.getData()).isEqualTo(UPDATED_DATA);
+        assertThat(testCompitoInClasse.getDataRestituizione()).isEqualTo(UPDATED_DATA_RESTITUIZIONE);
     }
 
     @Test
@@ -317,6 +334,8 @@ class CompitoInClasseResourceIT {
         CompitoInClasse partialUpdatedCompitoInClasse = new CompitoInClasse();
         partialUpdatedCompitoInClasse.setId(compitoInClasse.getId());
 
+        partialUpdatedCompitoInClasse.dataRestituizione(UPDATED_DATA_RESTITUIZIONE);
+
         restCompitoInClasseMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedCompitoInClasse.getId())
@@ -331,6 +350,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(DEFAULT_MATERIA);
         assertThat(testCompitoInClasse.getData()).isEqualTo(DEFAULT_DATA);
+        assertThat(testCompitoInClasse.getDataRestituizione()).isEqualTo(UPDATED_DATA_RESTITUIZIONE);
     }
 
     @Test
@@ -345,7 +365,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse partialUpdatedCompitoInClasse = new CompitoInClasse();
         partialUpdatedCompitoInClasse.setId(compitoInClasse.getId());
 
-        partialUpdatedCompitoInClasse.materia(UPDATED_MATERIA).data(UPDATED_DATA);
+        partialUpdatedCompitoInClasse.materia(UPDATED_MATERIA).data(UPDATED_DATA).dataRestituizione(UPDATED_DATA_RESTITUIZIONE);
 
         restCompitoInClasseMockMvc
             .perform(
@@ -361,6 +381,7 @@ class CompitoInClasseResourceIT {
         CompitoInClasse testCompitoInClasse = compitoInClasseList.get(compitoInClasseList.size() - 1);
         assertThat(testCompitoInClasse.getMateria()).isEqualTo(UPDATED_MATERIA);
         assertThat(testCompitoInClasse.getData()).isEqualTo(UPDATED_DATA);
+        assertThat(testCompitoInClasse.getDataRestituizione()).isEqualTo(UPDATED_DATA_RESTITUIZIONE);
     }
 
     @Test

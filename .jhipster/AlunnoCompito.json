@@ -10,10 +10,6 @@
       "fieldValidateRules": ["min", "max", "required"],
       "fieldValidateRulesMax": "10",
       "fieldValidateRulesMin": "0"
-    },
-    {
-      "fieldName": "dataRestituizione",
-      "fieldType": "ZonedDateTime"
     }
   ],
   "name": "AlunnoCompito",

@@ -2,26 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { map } from 'rxjs/operators';
-
-import dayjs from 'dayjs/esm';
-
 import { isPresent } from 'app/core/util/operators';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
 import { createRequestOption } from 'app/core/request/request-util';
 import { IAlunnoCompito, NewAlunnoCompito } from '../alunno-compito.model';
 
 export type PartialUpdateAlunnoCompito = Partial<IAlunnoCompito> & Pick<IAlunnoCompito, 'id'>;
-
-type RestOf<T extends IAlunnoCompito | NewAlunnoCompito> = Omit<T, 'dataRestituizione'> & {
-  dataRestituizione?: string | null;
-};
-
-export type RestAlunnoCompito = RestOf<IAlunnoCompito>;
-
-export type NewRestAlunnoCompito = RestOf<NewAlunnoCompito>;
-
-export type PartialUpdateRestAlunnoCompito = RestOf<PartialUpdateAlunnoCompito>;
 
 export type EntityResponseType = HttpResponse<IAlunnoCompito>;
 export type EntityArrayResponseType = HttpResponse<IAlunnoCompito[]>;
@@ -36,37 +22,28 @@ export class AlunnoCompitoService {
   ) {}
 
   create(alunnoCompito: NewAlunnoCompito): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(alunnoCompito);
-    return this.http
-      .post<RestAlunnoCompito>(this.resourceUrl, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.post<IAlunnoCompito>(this.resourceUrl, alunnoCompito, { observe: 'response' });
   }
 
   update(alunnoCompito: IAlunnoCompito): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(alunnoCompito);
-    return this.http
-      .put<RestAlunnoCompito>(`${this.resourceUrl}/${this.getAlunnoCompitoIdentifier(alunnoCompito)}`, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.put<IAlunnoCompito>(`${this.resourceUrl}/${this.getAlunnoCompitoIdentifier(alunnoCompito)}`, alunnoCompito, {
+      observe: 'response',
+    });
   }
 
   partialUpdate(alunnoCompito: PartialUpdateAlunnoCompito): Observable<EntityResponseType> {
-    const copy = this.convertDateFromClient(alunnoCompito);
-    return this.http
-      .patch<RestAlunnoCompito>(`${this.resourceUrl}/${this.getAlunnoCompitoIdentifier(alunnoCompito)}`, copy, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.patch<IAlunnoCompito>(`${this.resourceUrl}/${this.getAlunnoCompitoIdentifier(alunnoCompito)}`, alunnoCompito, {
+      observe: 'response',
+    });
   }
 
   find(id: number): Observable<EntityResponseType> {
-    return this.http
-      .get<RestAlunnoCompito>(`${this.resourceUrl}/${id}`, { observe: 'response' })
-      .pipe(map(res => this.convertResponseFromServer(res)));
+    return this.http.get<IAlunnoCompito>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http
-      .get<RestAlunnoCompito[]>(this.resourceUrl, { params: options, observe: 'response' })
-      .pipe(map(res => this.convertResponseArrayFromServer(res)));
+    return this.http.get<IAlunnoCompito[]>(this.resourceUrl, { params: options, observe: 'response' });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {
@@ -101,31 +78,5 @@ export class AlunnoCompitoService {
       return [...alunnoCompitosToAdd, ...alunnoCompitoCollection];
     }
     return alunnoCompitoCollection;
-  }
-
-  protected convertDateFromClient<T extends IAlunnoCompito | NewAlunnoCompito | PartialUpdateAlunnoCompito>(alunnoCompito: T): RestOf<T> {
-    return {
-      ...alunnoCompito,
-      dataRestituizione: alunnoCompito.dataRestituizione?.toJSON() ?? null,
-    };
-  }
-
-  protected convertDateFromServer(restAlunnoCompito: RestAlunnoCompito): IAlunnoCompito {
-    return {
-      ...restAlunnoCompito,
-      dataRestituizione: restAlunnoCompito.dataRestituizione ? dayjs(restAlunnoCompito.dataRestituizione) : undefined,
-    };
-  }
-
-  protected convertResponseFromServer(res: HttpResponse<RestAlunnoCompito>): HttpResponse<IAlunnoCompito> {
-    return res.clone({
-      body: res.body ? this.convertDateFromServer(res.body) : null,
-    });
-  }
-
-  protected convertResponseArrayFromServer(res: HttpResponse<RestAlunnoCompito[]>): HttpResponse<IAlunnoCompito[]> {
-    return res.clone({
-      body: res.body ? res.body.map(item => this.convertDateFromServer(item)) : null,
-    });
   }
 }

@@ -10,6 +10,7 @@ import { CompitoInClasseService, RestCompitoInClasse } from './compito-in-classe
 const requireRestSample: RestCompitoInClasse = {
   ...sampleWithRequiredData,
   data: sampleWithRequiredData.data?.format(DATE_FORMAT),
+  dataRestituizione: sampleWithRequiredData.dataRestituizione?.toJSON(),
 };
 
 describe('CompitoInClasse Service', () => {

@@ -3,21 +3,22 @@ import dayjs from 'dayjs/esm';
 import { ICompitoInClasse, NewCompitoInClasse } from './compito-in-classe.model';
 
 export const sampleWithRequiredData: ICompitoInClasse = {
-  id: 5419,
+  id: 3416,
+  materia: 'STORIA',
+  data: dayjs('2023-11-12'),
+};
+
+export const sampleWithPartialData: ICompitoInClasse = {
+  id: 9543,
   materia: 'INGLESE',
   data: dayjs('2023-11-13'),
 };
 
-export const sampleWithPartialData: ICompitoInClasse = {
-  id: 20239,
-  materia: 'ITALIANO',
-  data: dayjs('2023-11-12'),
-};
-
 export const sampleWithFullData: ICompitoInClasse = {
-  id: 32395,
-  materia: 'ITALIANO',
+  id: 19218,
+  materia: 'MATEMATICA',
   data: dayjs('2023-11-12'),
+  dataRestituizione: dayjs('2023-11-12T12:31'),
 };
 
 export const sampleWithNewData: NewCompitoInClasse = {

@@ -5,6 +5,7 @@ export interface ICompitoInClasse {
   id: number;
   materia?: keyof typeof Materia | null;
   data?: dayjs.Dayjs | null;
+  dataRestituizione?: dayjs.Dayjs | null;
 }
 
 export type NewCompitoInClasse = Omit<ICompitoInClasse, 'id'> & { id: null };

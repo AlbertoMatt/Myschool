@@ -22,6 +22,7 @@ describe('CompitoInClasse Form Service', () => {
             id: expect.any(Object),
             materia: expect.any(Object),
             data: expect.any(Object),
+            dataRestituizione: expect.any(Object),
           }),
         );
       });
@@ -34,6 +35,7 @@ describe('CompitoInClasse Form Service', () => {
             id: expect.any(Object),
             materia: expect.any(Object),
             data: expect.any(Object),
+            dataRestituizione: expect.any(Object),
           }),
         );
       });

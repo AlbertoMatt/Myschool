@@ -13,13 +13,13 @@ entity Alunno {
 }
 
 entity AlunnoCompito {
-  risultatoNumerico Double min(0) max(10) required,
-  dataRestituizione ZonedDateTime
+  risultatoNumerico Double min(0) max(10) required
 }
 
 entity CompitoInClasse {
   materia Materia required,
-  data LocalDate required
+  data LocalDate required,
+  dataRestituizione ZonedDateTime
 }
 
 

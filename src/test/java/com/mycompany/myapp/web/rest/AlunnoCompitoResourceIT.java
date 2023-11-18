@@ -1,6 +1,5 @@
 package com.mycompany.myapp.web.rest;
 
-import static com.mycompany.myapp.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -14,10 +13,6 @@ import com.mycompany.myapp.repository.AlunnoCompitoRepository;
 import com.mycompany.myapp.service.dto.AlunnoCompitoDTO;
 import com.mycompany.myapp.service.mapper.AlunnoCompitoMapper;
 import jakarta.persistence.EntityManager;
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,9 +35,6 @@ class AlunnoCompitoResourceIT {
 
     private static final Double DEFAULT_RISULTATO_NUMERICO = 0D;
     private static final Double UPDATED_RISULTATO_NUMERICO = 1D;
-
-    private static final ZonedDateTime DEFAULT_DATA_RESTITUIZIONE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_DATA_RESTITUIZIONE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
 
     private static final String ENTITY_API_URL = "/api/alunno-compitos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -71,9 +63,7 @@ class AlunnoCompitoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AlunnoCompito createEntity(EntityManager em) {
-        AlunnoCompito alunnoCompito = new AlunnoCompito()
-            .risultatoNumerico(DEFAULT_RISULTATO_NUMERICO)
-            .dataRestituizione(DEFAULT_DATA_RESTITUIZIONE);
+        AlunnoCompito alunnoCompito = new AlunnoCompito().risultatoNumerico(DEFAULT_RISULTATO_NUMERICO);
         // Add required entity
         Alunno alunno;
         if (TestUtil.findAll(em, Alunno.class).isEmpty()) {
@@ -104,9 +94,7 @@ class AlunnoCompitoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static AlunnoCompito createUpdatedEntity(EntityManager em) {
-        AlunnoCompito alunnoCompito = new AlunnoCompito()
-            .risultatoNumerico(UPDATED_RISULTATO_NUMERICO)
-            .dataRestituizione(UPDATED_DATA_RESTITUIZIONE);
+        AlunnoCompito alunnoCompito = new AlunnoCompito().risultatoNumerico(UPDATED_RISULTATO_NUMERICO);
         // Add required entity
         Alunno alunno;
         if (TestUtil.findAll(em, Alunno.class).isEmpty()) {
@@ -152,7 +140,6 @@ class AlunnoCompitoResourceIT {
         assertThat(alunnoCompitoList).hasSize(databaseSizeBeforeCreate + 1);
         AlunnoCompito testAlunnoCompito = alunnoCompitoList.get(alunnoCompitoList.size() - 1);
         assertThat(testAlunnoCompito.getRisultatoNumerico()).isEqualTo(DEFAULT_RISULTATO_NUMERICO);
-        assertThat(testAlunnoCompito.getDataRestituizione()).isEqualTo(DEFAULT_DATA_RESTITUIZIONE);
     }
 
     @Test
@@ -208,8 +195,7 @@ class AlunnoCompitoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(alunnoCompito.getId().intValue())))
-            .andExpect(jsonPath("$.[*].risultatoNumerico").value(hasItem(DEFAULT_RISULTATO_NUMERICO.doubleValue())))
-            .andExpect(jsonPath("$.[*].dataRestituizione").value(hasItem(sameInstant(DEFAULT_DATA_RESTITUIZIONE))));
+            .andExpect(jsonPath("$.[*].risultatoNumerico").value(hasItem(DEFAULT_RISULTATO_NUMERICO.doubleValue())));
     }
 
     @Test
@@ -224,8 +210,7 @@ class AlunnoCompitoResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(alunnoCompito.getId().intValue()))
-            .andExpect(jsonPath("$.risultatoNumerico").value(DEFAULT_RISULTATO_NUMERICO.doubleValue()))
-            .andExpect(jsonPath("$.dataRestituizione").value(sameInstant(DEFAULT_DATA_RESTITUIZIONE)));
+            .andExpect(jsonPath("$.risultatoNumerico").value(DEFAULT_RISULTATO_NUMERICO.doubleValue()));
     }
 
     @Test
@@ -247,7 +232,7 @@ class AlunnoCompitoResourceIT {
         AlunnoCompito updatedAlunnoCompito = alunnoCompitoRepository.findById(alunnoCompito.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedAlunnoCompito are not directly saved in db
         em.detach(updatedAlunnoCompito);
-        updatedAlunnoCompito.risultatoNumerico(UPDATED_RISULTATO_NUMERICO).dataRestituizione(UPDATED_DATA_RESTITUIZIONE);
+        updatedAlunnoCompito.risultatoNumerico(UPDATED_RISULTATO_NUMERICO);
         AlunnoCompitoDTO alunnoCompitoDTO = alunnoCompitoMapper.toDto(updatedAlunnoCompito);
 
         restAlunnoCompitoMockMvc
@@ -263,7 +248,6 @@ class AlunnoCompitoResourceIT {
         assertThat(alunnoCompitoList).hasSize(databaseSizeBeforeUpdate);
         AlunnoCompito testAlunnoCompito = alunnoCompitoList.get(alunnoCompitoList.size() - 1);
         assertThat(testAlunnoCompito.getRisultatoNumerico()).isEqualTo(UPDATED_RISULTATO_NUMERICO);
-        assertThat(testAlunnoCompito.getDataRestituizione()).isEqualTo(UPDATED_DATA_RESTITUIZIONE);
     }
 
     @Test
@@ -358,7 +342,6 @@ class AlunnoCompitoResourceIT {
         assertThat(alunnoCompitoList).hasSize(databaseSizeBeforeUpdate);
         AlunnoCompito testAlunnoCompito = alunnoCompitoList.get(alunnoCompitoList.size() - 1);
         assertThat(testAlunnoCompito.getRisultatoNumerico()).isEqualTo(DEFAULT_RISULTATO_NUMERICO);
-        assertThat(testAlunnoCompito.getDataRestituizione()).isEqualTo(DEFAULT_DATA_RESTITUIZIONE);
     }
 
     @Test
@@ -373,7 +356,7 @@ class AlunnoCompitoResourceIT {
         AlunnoCompito partialUpdatedAlunnoCompito = new AlunnoCompito();
         partialUpdatedAlunnoCompito.setId(alunnoCompito.getId());
 
-        partialUpdatedAlunnoCompito.risultatoNumerico(UPDATED_RISULTATO_NUMERICO).dataRestituizione(UPDATED_DATA_RESTITUIZIONE);
+        partialUpdatedAlunnoCompito.risultatoNumerico(UPDATED_RISULTATO_NUMERICO);
 
         restAlunnoCompitoMockMvc
             .perform(
@@ -388,7 +371,6 @@ class AlunnoCompitoResourceIT {
         assertThat(alunnoCompitoList).hasSize(databaseSizeBeforeUpdate);
         AlunnoCompito testAlunnoCompito = alunnoCompitoList.get(alunnoCompitoList.size() - 1);
         assertThat(testAlunnoCompito.getRisultatoNumerico()).isEqualTo(UPDATED_RISULTATO_NUMERICO);
-        assertThat(testAlunnoCompito.getDataRestituizione()).isEqualTo(UPDATED_DATA_RESTITUIZIONE);
     }
 
     @Test

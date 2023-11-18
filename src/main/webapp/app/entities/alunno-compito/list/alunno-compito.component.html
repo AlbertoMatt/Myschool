@@ -44,12 +44,6 @@
               <fa-icon class="p-1" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="dataRestituizione">
-            <div class="d-flex">
-              <span>Data Restituizione</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col" jhiSortBy="alunno.id">
             <div class="d-flex">
               <span>Alunno</span>
@@ -71,7 +65,6 @@
             <a [routerLink]="['/alunno-compito', alunnoCompito.id, 'view']">{{ alunnoCompito.id }}</a>
           </td>
           <td>{{ alunnoCompito.risultatoNumerico }}</td>
-          <td>{{ alunnoCompito.dataRestituizione | formatMediumDatetime }}</td>
           <td>
             <div *ngIf="alunnoCompito.alunno">
               <a [routerLink]="['/alunno', alunnoCompito.alunno.id, 'view']">{{ alunnoCompito.alunno.id }}</a>

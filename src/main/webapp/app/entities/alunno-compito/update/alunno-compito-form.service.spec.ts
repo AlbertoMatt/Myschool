@@ -21,7 +21,6 @@ describe('AlunnoCompito Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             risultatoNumerico: expect.any(Object),
-            dataRestituizione: expect.any(Object),
             alunno: expect.any(Object),
             compito: expect.any(Object),
           }),
@@ -35,7 +34,6 @@ describe('AlunnoCompito Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             risultatoNumerico: expect.any(Object),
-            dataRestituizione: expect.any(Object),
             alunno: expect.any(Object),
             compito: expect.any(Object),
           }),
