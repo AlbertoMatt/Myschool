@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -16,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -181,5 +183,24 @@ public class CompitoInClasseResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PatchMapping("/{id}/valorizza-data-restituzione")
+    public ResponseEntity<CompitoInClasseDTO> valorizzaDataRestituzione(
+        @PathVariable Long id,
+        @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime dataRestituizione
+    ) {
+        Optional<CompitoInClasseDTO> optionalCompito = compitoInClasseService.findOne(id);
+
+        if (optionalCompito.isPresent()) {
+            CompitoInClasseDTO compitoInClasseDTO = optionalCompito.get();
+            compitoInClasseDTO.setDataRestituizione(dataRestituizione);
+
+            CompitoInClasseDTO updatedCompitoDTO = compitoInClasseService.save(compitoInClasseDTO);
+
+            return ResponseEntity.ok().body(updatedCompitoDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
