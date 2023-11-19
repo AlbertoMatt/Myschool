@@ -21,6 +21,7 @@ type AlunnoFormGroupContent = {
   nome: FormControl<IAlunno['nome']>;
   cognome: FormControl<IAlunno['cognome']>;
   dataNascita: FormControl<IAlunno['dataNascita']>;
+  mediaVoti: FormControl<IAlunno['mediaVoti']>;
   classeDiAppartenenza: FormControl<IAlunno['classeDiAppartenenza']>;
 };
 
@@ -50,6 +51,7 @@ export class AlunnoFormService {
       dataNascita: new FormControl(alunnoRawValue.dataNascita, {
         validators: [Validators.required],
       }),
+      mediaVoti: new FormControl(alunnoRawValue.mediaVoti),
       classeDiAppartenenza: new FormControl(alunnoRawValue.classeDiAppartenenza, {
         validators: [Validators.required],
       }),

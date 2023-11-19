@@ -9,7 +9,8 @@ entity Classe {
 entity Alunno {
   nome String required,
   cognome String required,
-  dataNascita LocalDate required
+  dataNascita LocalDate required,
+  mediaVoti Double
 }
 
 entity AlunnoCompito {

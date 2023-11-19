@@ -23,6 +23,7 @@ describe('Alunno Form Service', () => {
             nome: expect.any(Object),
             cognome: expect.any(Object),
             dataNascita: expect.any(Object),
+            mediaVoti: expect.any(Object),
             classeDiAppartenenza: expect.any(Object),
           }),
         );
@@ -37,6 +38,7 @@ describe('Alunno Form Service', () => {
             nome: expect.any(Object),
             cognome: expect.any(Object),
             dataNascita: expect.any(Object),
+            mediaVoti: expect.any(Object),
             classeDiAppartenenza: expect.any(Object),
           }),
         );

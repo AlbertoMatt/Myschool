@@ -43,6 +43,9 @@ class AlunnoResourceIT {
     private static final LocalDate DEFAULT_DATA_NASCITA = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_DATA_NASCITA = LocalDate.now(ZoneId.systemDefault());
 
+    private static final Double DEFAULT_MEDIA_VOTI = 1D;
+    private static final Double UPDATED_MEDIA_VOTI = 2D;
+
     private static final String ENTITY_API_URL = "/api/alunnos";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -70,7 +73,11 @@ class AlunnoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Alunno createEntity(EntityManager em) {
-        Alunno alunno = new Alunno().nome(DEFAULT_NOME).cognome(DEFAULT_COGNOME).dataNascita(DEFAULT_DATA_NASCITA);
+        Alunno alunno = new Alunno()
+            .nome(DEFAULT_NOME)
+            .cognome(DEFAULT_COGNOME)
+            .dataNascita(DEFAULT_DATA_NASCITA)
+            .mediaVoti(DEFAULT_MEDIA_VOTI);
         // Add required entity
         Classe classe;
         if (TestUtil.findAll(em, Classe.class).isEmpty()) {
@@ -91,7 +98,11 @@ class AlunnoResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Alunno createUpdatedEntity(EntityManager em) {
-        Alunno alunno = new Alunno().nome(UPDATED_NOME).cognome(UPDATED_COGNOME).dataNascita(UPDATED_DATA_NASCITA);
+        Alunno alunno = new Alunno()
+            .nome(UPDATED_NOME)
+            .cognome(UPDATED_COGNOME)
+            .dataNascita(UPDATED_DATA_NASCITA)
+            .mediaVoti(UPDATED_MEDIA_VOTI);
         // Add required entity
         Classe classe;
         if (TestUtil.findAll(em, Classe.class).isEmpty()) {
@@ -127,6 +138,7 @@ class AlunnoResourceIT {
         assertThat(testAlunno.getNome()).isEqualTo(DEFAULT_NOME);
         assertThat(testAlunno.getCognome()).isEqualTo(DEFAULT_COGNOME);
         assertThat(testAlunno.getDataNascita()).isEqualTo(DEFAULT_DATA_NASCITA);
+        assertThat(testAlunno.getMediaVoti()).isEqualTo(DEFAULT_MEDIA_VOTI);
     }
 
     @Test
@@ -216,7 +228,8 @@ class AlunnoResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(alunno.getId().intValue())))
             .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
             .andExpect(jsonPath("$.[*].cognome").value(hasItem(DEFAULT_COGNOME)))
-            .andExpect(jsonPath("$.[*].dataNascita").value(hasItem(DEFAULT_DATA_NASCITA.toString())));
+            .andExpect(jsonPath("$.[*].dataNascita").value(hasItem(DEFAULT_DATA_NASCITA.toString())))
+            .andExpect(jsonPath("$.[*].mediaVoti").value(hasItem(DEFAULT_MEDIA_VOTI.doubleValue())));
     }
 
     @Test
@@ -233,7 +246,8 @@ class AlunnoResourceIT {
             .andExpect(jsonPath("$.id").value(alunno.getId().intValue()))
             .andExpect(jsonPath("$.nome").value(DEFAULT_NOME))
             .andExpect(jsonPath("$.cognome").value(DEFAULT_COGNOME))
-            .andExpect(jsonPath("$.dataNascita").value(DEFAULT_DATA_NASCITA.toString()));
+            .andExpect(jsonPath("$.dataNascita").value(DEFAULT_DATA_NASCITA.toString()))
+            .andExpect(jsonPath("$.mediaVoti").value(DEFAULT_MEDIA_VOTI.doubleValue()));
     }
 
     @Test
@@ -255,7 +269,7 @@ class AlunnoResourceIT {
         Alunno updatedAlunno = alunnoRepository.findById(alunno.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedAlunno are not directly saved in db
         em.detach(updatedAlunno);
-        updatedAlunno.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).dataNascita(UPDATED_DATA_NASCITA);
+        updatedAlunno.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).dataNascita(UPDATED_DATA_NASCITA).mediaVoti(UPDATED_MEDIA_VOTI);
         AlunnoDTO alunnoDTO = alunnoMapper.toDto(updatedAlunno);
 
         restAlunnoMockMvc
@@ -273,6 +287,7 @@ class AlunnoResourceIT {
         assertThat(testAlunno.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testAlunno.getCognome()).isEqualTo(UPDATED_COGNOME);
         assertThat(testAlunno.getDataNascita()).isEqualTo(UPDATED_DATA_NASCITA);
+        assertThat(testAlunno.getMediaVoti()).isEqualTo(UPDATED_MEDIA_VOTI);
     }
 
     @Test
@@ -352,6 +367,8 @@ class AlunnoResourceIT {
         Alunno partialUpdatedAlunno = new Alunno();
         partialUpdatedAlunno.setId(alunno.getId());
 
+        partialUpdatedAlunno.mediaVoti(UPDATED_MEDIA_VOTI);
+
         restAlunnoMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedAlunno.getId())
@@ -367,6 +384,7 @@ class AlunnoResourceIT {
         assertThat(testAlunno.getNome()).isEqualTo(DEFAULT_NOME);
         assertThat(testAlunno.getCognome()).isEqualTo(DEFAULT_COGNOME);
         assertThat(testAlunno.getDataNascita()).isEqualTo(DEFAULT_DATA_NASCITA);
+        assertThat(testAlunno.getMediaVoti()).isEqualTo(UPDATED_MEDIA_VOTI);
     }
 
     @Test
@@ -381,7 +399,7 @@ class AlunnoResourceIT {
         Alunno partialUpdatedAlunno = new Alunno();
         partialUpdatedAlunno.setId(alunno.getId());
 
-        partialUpdatedAlunno.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).dataNascita(UPDATED_DATA_NASCITA);
+        partialUpdatedAlunno.nome(UPDATED_NOME).cognome(UPDATED_COGNOME).dataNascita(UPDATED_DATA_NASCITA).mediaVoti(UPDATED_MEDIA_VOTI);
 
         restAlunnoMockMvc
             .perform(
@@ -398,6 +416,7 @@ class AlunnoResourceIT {
         assertThat(testAlunno.getNome()).isEqualTo(UPDATED_NOME);
         assertThat(testAlunno.getCognome()).isEqualTo(UPDATED_COGNOME);
         assertThat(testAlunno.getDataNascita()).isEqualTo(UPDATED_DATA_NASCITA);
+        assertThat(testAlunno.getMediaVoti()).isEqualTo(UPDATED_MEDIA_VOTI);
     }
 
     @Test

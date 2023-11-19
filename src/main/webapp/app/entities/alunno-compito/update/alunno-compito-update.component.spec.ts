@@ -54,10 +54,10 @@ describe('AlunnoCompito Management Update Component', () => {
   describe('ngOnInit', () => {
     it('Should call Alunno query and add missing value', () => {
       const alunnoCompito: IAlunnoCompito = { id: 456 };
-      const alunno: IAlunno = { id: 5372 };
+      const alunno: IAlunno = { id: 24971 };
       alunnoCompito.alunno = alunno;
 
-      const alunnoCollection: IAlunno[] = [{ id: 24971 }];
+      const alunnoCollection: IAlunno[] = [{ id: 21808 }];
       jest.spyOn(alunnoService, 'query').mockReturnValue(of(new HttpResponse({ body: alunnoCollection })));
       const additionalAlunnos = [alunno];
       const expectedCollection: IAlunno[] = [...additionalAlunnos, ...alunnoCollection];
@@ -98,7 +98,7 @@ describe('AlunnoCompito Management Update Component', () => {
 
     it('Should update editForm', () => {
       const alunnoCompito: IAlunnoCompito = { id: 456 };
-      const alunno: IAlunno = { id: 21808 };
+      const alunno: IAlunno = { id: 11357 };
       alunnoCompito.alunno = alunno;
       const compito: ICompitoInClasse = { id: 11740 };
       alunnoCompito.compito = compito;

@@ -26,6 +26,10 @@
         <dd>
           <span>{{ alunno.dataNascita | formatMediumDate }}</span>
         </dd>
+        <dt><span>Media Voti</span></dt>
+        <dd>
+          <span>{{ alunno.mediaVoti }}</span>
+        </dd>
         <dt><span>Classe Di Appartenenza</span></dt>
         <dd>
           <div *ngIf="alunno.classeDiAppartenenza">

@@ -18,6 +18,10 @@
       "fieldName": "dataNascita",
       "fieldType": "LocalDate",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "mediaVoti",
+      "fieldType": "Double"
     }
   ],
   "name": "Alunno",

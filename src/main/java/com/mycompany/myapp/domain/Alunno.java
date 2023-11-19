@@ -38,6 +38,9 @@ public class Alunno implements Serializable {
     @Column(name = "data_nascita", nullable = false)
     private LocalDate dataNascita;
 
+    @Column(name = "media_voti")
+    private Double mediaVoti;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "alunno")
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     @JsonIgnoreProperties(value = { "alunno", "compito" }, allowSetters = true)
@@ -100,6 +103,19 @@ public class Alunno implements Serializable {
 
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
+    }
+
+    public Double getMediaVoti() {
+        return this.mediaVoti;
+    }
+
+    public Alunno mediaVoti(Double mediaVoti) {
+        this.setMediaVoti(mediaVoti);
+        return this;
+    }
+
+    public void setMediaVoti(Double mediaVoti) {
+        this.mediaVoti = mediaVoti;
     }
 
     public Set<AlunnoCompito> getCompitiEseguitis() {
@@ -173,6 +189,7 @@ public class Alunno implements Serializable {
             ", nome='" + getNome() + "'" +
             ", cognome='" + getCognome() + "'" +
             ", dataNascita='" + getDataNascita() + "'" +
+            ", mediaVoti=" + getMediaVoti() +
             "}";
     }
 }

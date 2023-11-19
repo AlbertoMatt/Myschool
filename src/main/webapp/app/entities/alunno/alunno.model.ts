@@ -6,6 +6,7 @@ export interface IAlunno {
   nome?: string | null;
   cognome?: string | null;
   dataNascita?: dayjs.Dayjs | null;
+  mediaVoti?: number | null;
   classeDiAppartenenza?: Pick<IClasse, 'id'> | null;
 }
 

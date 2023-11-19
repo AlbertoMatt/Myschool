@@ -22,6 +22,8 @@ public class AlunnoDTO implements Serializable {
     @NotNull
     private LocalDate dataNascita;
 
+    private Double mediaVoti;
+
     private ClasseDTO classeDiAppartenenza;
 
     public Long getId() {
@@ -54,6 +56,14 @@ public class AlunnoDTO implements Serializable {
 
     public void setDataNascita(LocalDate dataNascita) {
         this.dataNascita = dataNascita;
+    }
+
+    public Double getMediaVoti() {
+        return mediaVoti;
+    }
+
+    public void setMediaVoti(Double mediaVoti) {
+        this.mediaVoti = mediaVoti;
     }
 
     public ClasseDTO getClasseDiAppartenenza() {
@@ -93,6 +103,7 @@ public class AlunnoDTO implements Serializable {
             ", nome='" + getNome() + "'" +
             ", cognome='" + getCognome() + "'" +
             ", dataNascita='" + getDataNascita() + "'" +
+            ", mediaVoti=" + getMediaVoti() +
             ", classeDiAppartenenza=" + getClasseDiAppartenenza() +
             "}";
     }
