@@ -191,22 +191,28 @@ public class CompitoInClasseResource {
         @PathVariable Long id,
         @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) ZonedDateTime dataRestituizione
     ) {
+        log.debug("REST request to valorizzaDataRestituzione CompitoInClasse : {}, {}", id, dataRestituizione);
+
         Optional<CompitoInClasseDTO> optionalCompito = compitoInClasseService.findOne(id);
 
         if (optionalCompito.isPresent()) {
             CompitoInClasseDTO compitoInClasseDTO = optionalCompito.get();
             compitoInClasseDTO.setDataRestituizione(dataRestituizione);
 
-            CompitoInClasseDTO updatedCompitoDTO = compitoInClasseService.save(compitoInClasseDTO);
+            Optional<CompitoInClasseDTO> updatedCompitoDTO = compitoInClasseService.partialUpdate(compitoInClasseDTO);
 
-            return ResponseEntity.ok().body(updatedCompitoDTO);
+            return ResponseUtil.wrapOrNotFound(
+                updatedCompitoDTO,
+                HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, compitoInClasseDTO.getId().toString())
+            );
         } else {
-            return ResponseEntity.notFound().build();
+            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
     }
 
     @GetMapping("/{id}/alunni-risultato-superiore")
     public ResponseEntity<List<AlunnoDTO>> getAlunniRisultatoSuperiore(@PathVariable Long id, @RequestParam Double valoreMinimo) {
+        log.debug("REST request to getAlunniRisultatoSuperiore CompitoInClasse : {} {}", id, valoreMinimo);
         List<AlunnoDTO> alunni = compitoInClasseService.findAlunniByCompitoAndRisultatoSuperiore(id, valoreMinimo);
         return ResponseEntity.ok().body(alunni);
     }
