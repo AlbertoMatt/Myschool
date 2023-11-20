@@ -18,7 +18,7 @@ public class StampaConteggioCompitiBatch {
         this.compitoInClasseRepository = compitoInClasseRepository;
     }
 
-    @Scheduled(cron = "0 10 18 * * ?")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void stampaConteggioCompiti() {
         // Calcola la data sette giorni prima
         LocalDate dataSetteGiorniPrima = LocalDate.now().minusDays(7);
