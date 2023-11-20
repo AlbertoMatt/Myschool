@@ -28,3 +28,62 @@ Per avviare l'applicazione si deve eseguire il seguente comando da terminale nel
 ```bash
 ./mvnw
 ```
+
+## Modifiche Effettuate per Punto
+
+### Punto 1
+
+- Modifiche al file `jhipster_jdl.jdl`:
+  - Aggiunta della nuova entity `AlunnoCompito`.
+  - Modifica delle entity esistenti.
+- Eliminazione dei changelog modificati delle entity `Alunno` e `CompitoInClasse`.
+
+- Esecuzione del comando `./mvnw liquibase:diff`.
+
+- Modifica del file `master.xml`:
+
+  - Inserimento del changelog creato dal comando precedente.
+
+- Modifica della classe `src/main/java/com/mycompany/myapp/web/rest/CompitoInClasseResource.java`:
+  - Creazione dell'API PATCH con endpoint "api/{id}/valorizza-data-restituzione".
+
+### Punto 2
+
+- Modifica della classe `src/main/java/com/mycompany/myapp/web/rest/CompitoInClasseResource.java`:
+  - Creazione dell'API GET con endpoint "api/{id}/alunni-risultato-superiore".
+
+### Punto 3
+
+- Creazione della cartella `src/main/java/com/mycompany/myapp/batch`.
+- Inserimento della classe `StampaConteggioCompitiBatch.java` nella cartella sopra indicata.
+
+  - Contiene un metodo annotato con `@Scheduled(cron = "0 0 12 * * ?")` che stampa una riga di log con il numero dei compiti eseguiti 7 giorni prima alle 12 di ogni giorno.
+
+- Annotazione della classe `src/main/java/com/mycompany/myapp/MyschoolApp.java` con `@EnableScheduling`.
+
+- Aggiunta della dipendenza nel file `pom.xml`:
+  ```xml
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-batch</artifactId>
+  </dependency>
+  ```
+
+### Punto 4
+
+- Modifiche al file `jhipster_jdl.jdl`:
+  - Aggiunta del campo `mediaVoti` di tipo `Double` all'entità `Alunno`.
+- Eliminazione dei changelog modificati delle varie entity.
+
+- Esecuzione del comando `./mvnw liquibase:diff`.
+
+- Modifica del file `master.xml`:
+
+  - Inserimento del changelog creato dal comando precedente.
+
+- Creazione della classe `CalcolaMediaVotiBatch.java` nella cartella `src/main/java/com/mycompany/myapp/batch`.
+  - Contiene un metodo annotato con `@Scheduled(cron = "0 0 8 * * ?")` che calcola la media dei voti conseguiti da ogni alunno alle 8 di ogni giorno e la salva nel campo `mediaVoti` dell'entità `Alunno`.
+
+### Modifiche alle API
+
+A seguito di queste modifiche, sono state apportate le seguenti modifiche alle API esistenti e sono state aggiunte nuove API relative all'entità `AlunnoCompito` nel file `MySchool.postman_collection.json_v2.0.json`.

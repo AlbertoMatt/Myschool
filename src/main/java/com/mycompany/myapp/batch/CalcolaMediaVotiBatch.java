@@ -17,7 +17,7 @@ public class CalcolaMediaVotiBatch {
         this.alunnoRepository = alunnoRepository;
     }
 
-    @Scheduled(cron = "0 46 15 * * ?")
+    @Scheduled(cron = "0 08 18 * * ?")
     public void calcolaMediaVotiAlunni() {
         // Recupera tutti gli alunni con i compiti
         List<Alunno> alunniWithCompiti = alunnoRepository.findAllWithCompiti();
