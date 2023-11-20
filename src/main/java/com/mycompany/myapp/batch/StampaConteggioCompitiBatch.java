@@ -20,13 +20,8 @@ public class StampaConteggioCompitiBatch {
 
     @Scheduled(cron = "0 0 12 * * ?")
     public void stampaConteggioCompiti() {
-        // Calcola la data sette giorni prima
         LocalDate dataSetteGiorniPrima = LocalDate.now().minusDays(7);
-
-        // Esegui la query per contare i compiti eseguiti sette giorni prima
         int conteggioCompiti = compitoInClasseRepository.countCompitiByData(dataSetteGiorniPrima);
-
-        // Stampa il conteggio nel log
         log.debug("Numero di compiti eseguiti 7 giorni prima: " + conteggioCompiti);
     }
 }

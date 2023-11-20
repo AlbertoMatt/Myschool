@@ -50,7 +50,7 @@ Per avviare l'applicazione si deve eseguire il seguente comando da terminale nel
 ### Punto 2
 
 - Modifica della classe `src/main/java/com/mycompany/myapp/web/rest/CompitoInClasseResource.java`:
-  - Creazione dell'API GET con endpoint "api/{id}/alunni-risultato-superiore".
+  - Creazione dell'API GET con endpoint "api/{id}/alunni-risultato-superiore?valoreMinimo={valoreMinimo}".
 
 ### Punto 3
 
